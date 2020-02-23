@@ -8,6 +8,8 @@ class Calculator extends StatefulWidget {
 }
 
 class _CalculatorState extends State<Calculator> {
+  String displayText = '0';
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,7 +18,7 @@ class _CalculatorState extends State<Calculator> {
         children: <Widget>[
           // * Calculator body *//
           Scaffold(
-                      body: Column(
+            body: Column(
               children: <Widget>[
                 // * Display * //
                 Container(
@@ -30,12 +32,22 @@ class _CalculatorState extends State<Calculator> {
                       top: MediaQuery.of(context).padding.vertical + 10,
                       left: 10.0,
                       right: 10.0,
+                      bottom: 10.0,
                     ),
-                    child: Column(
-                      children: <Widget>[],
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: Text(
+                        displayText,
+                        style: TextStyle(
+                          color: baffllingBlue,
+                          fontSize: 45.0,
+                          fontFamily: 'Righteous',
+                        ),
+                      ),
                     ),
                   ),
                 ),
+                // * Button layout * //
                 Container(
                   height: MediaQuery.of(context).size.height * 0.625,
                   decoration: BoxDecoration(
@@ -233,39 +245,49 @@ class ColFour extends StatelessWidget {
   }
 }
 
-class Button extends StatelessWidget {
+class Button extends StatefulWidget {
   final parentColor;
   final parentText;
 
   Button({this.parentColor, this.parentText});
 
   @override
+  _ButtonState createState() => _ButtonState();
+}
+
+class _ButtonState extends State<Button> {
+  @override
   Widget build(BuildContext context) {
-    return InkWell(
-      splashColor: otherBlue,
-      onTap: () {
-        //TODO : Add functioning
-      },
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(30.0),
           child: Container(
         width: 80.0,
-        decoration: BoxDecoration(
-          color: parentColor,
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 12.0),
-          child: Align(
-            alignment: Alignment.center,
-            child: Text(
-              parentText,
-              style: TextStyle(
-                color: notSoWhite,
-                fontFamily: 'Righteous',
-                fontSize: 30.0,
-              ),
+        color: widget.parentColor,
+        child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              splashColor: otherBlue,
+              onTap: () {
+        setState(() {
+          // TODO change 'display text'
+        });
+              },
+              child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 12.0),
+        child: Align(
+          alignment: Alignment.center,
+          child: Text(
+            widget.parentText,
+            style: TextStyle(
+              color: notSoWhite,
+              fontFamily: 'Righteous',
+              fontSize: 30.0,
             ),
           ),
         ),
+              ),
+            ),
+          ),
       ),
     );
   }
@@ -283,7 +305,7 @@ class ButtonTwo extends StatelessWidget {
       onTap: () {
         //TODO : Add functioning
       },
-          child: Container(
+      child: Container(
         width: 80.0,
         height: 115.0,
         decoration: BoxDecoration(

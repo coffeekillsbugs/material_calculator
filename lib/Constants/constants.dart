@@ -113,31 +113,97 @@ class ColFour extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Button(
-          parentColor: otherBlue,
-          parentText: '/',
+        Expanded(
+          flex: 2,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Button(
+                parentColor: otherBlue,
+                parentText: '/',
+              ),
+              Button(
+                parentColor: otherBlue,
+                parentText: 'X',
+              ),
+              Button(
+                parentColor: otherBlue,
+                parentText: '-',
+              ),
+              Button(
+                parentColor: otherBlue,
+                parentText: '+',
+              ),
+
+              // Button(
+              //   parentColor: placidOrange,
+              //   parentText: '=',
+              // ),
+            ],
+          ),
         ),
-        Button(
-          parentColor: otherBlue,
-          parentText: 'X',
-        ),
-        Button(
-          parentColor: otherBlue,
-          parentText: '-',
-        ),
-        Button(
-          parentColor: otherBlue,
-          parentText: '+',
-        ),
-        ButtonTwo(
-          parentColor: placidOrange,
-          parentText: '=',
-        ),
-        // Button(
-        //   parentColor: placidOrange,
-        //   parentText: '=',
-        // ),
+        Expanded(
+          flex: 1,
+          child: Padding(
+            padding: EdgeInsets.only(top: 10.0),
+            child: Button(
+              parentColor: placidOrange,
+              parentText: '=',
+            ),
+          ),
+        )
       ],
     );
   }
 }
+
+// class ColFour extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//       children: <Widget>[
+//         Expanded(
+//           flex: 1,
+//           child: Button(
+//             parentColor: otherBlue,
+//             parentText: '/',
+//           ),
+//         ),
+//         Expanded(
+//           flex: 1,
+//           child: Button(
+//             parentColor: otherBlue,
+//             parentText: 'X',
+//           ),
+//         ),
+//         Expanded(
+//           flex: 1,
+//           child: Button(
+//             parentColor: otherBlue,
+//             parentText: '-',
+//           ),
+//         ),
+//         Expanded(
+//           flex: 1,
+//           child: Button(
+//             parentColor: otherBlue,
+//             parentText: '+',
+//           ),
+//         ),
+//         Expanded(
+//           flex: 2,
+//           child: ButtonTwo(
+//             parentColor: placidOrange,
+//             parentText: '=',
+//           ),
+//         )
+
+//         // Button(
+//         //   parentColor: placidOrange,
+//         //   parentText: '=',
+//         // ),
+//       ],
+//     );
+//   }
+// }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:material_calculator/Constants/colors.dart';
 import 'package:material_calculator/Constants/constants.dart';
+import 'package:material_calculator/main.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
 
 class Calculator extends StatefulWidget {
   @override
@@ -9,10 +11,11 @@ class Calculator extends StatefulWidget {
 }
 
 class _CalculatorState extends State<Calculator> {
-  String displayText = '0';
-
   @override
   Widget build(BuildContext context) {
+    
+    final display = Provider.of<Display>(context);
+
     return Stack(
       children: <Widget>[
         // * Calculator body *//
@@ -36,7 +39,7 @@ class _CalculatorState extends State<Calculator> {
                   child: Align(
                     alignment: Alignment.bottomRight,
                     child: Text(
-                      displayText,
+                      display.getDisplay(),
                       style: TextStyle(
                         color: baffllingBlue,
                         fontSize: 45.0,

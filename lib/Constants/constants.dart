@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_calculator/Constants/colors.dart';
 import 'package:material_calculator/Widgets/buttons.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class ColOne extends StatelessWidget {
   @override
@@ -78,10 +79,7 @@ class ColThree extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Button(
-          parentColor: otherBlue,
-          parentText: '%',
-        ),
+        IconasButton(),
         Button(
           parentColor: otherBlue,
           parentText: 'x',
@@ -134,11 +132,6 @@ class ColFour extends StatelessWidget {
                 parentColor: otherBlue,
                 parentText: '+',
               ),
-
-              // Button(
-              //   parentColor: placidOrange,
-              //   parentText: '=',
-              // ),
             ],
           ),
         ),

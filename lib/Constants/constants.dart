@@ -11,7 +11,7 @@ class ColOne extends StatelessWidget {
       children: <Widget>[
         Button(
           parentColor: placidOrange,
-          parentText: 'AC',
+          parentText: 'C',
         ),
         Button(
           parentColor: otherBlue,

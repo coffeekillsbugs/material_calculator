@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:material_calculator/Constants/colors.dart';
 import 'package:material_calculator/main.dart';
@@ -28,8 +29,10 @@ class _ButtonState extends State<Button> {
             splashColor: otherBlue,
             onTap: () {
               //print('Button pressed : ' + widget.parentText);
-              Provider.of<Display>(context, listen: false)
-                  .appendDisplay(widget.parentText);
+              // Provider.of<Display>(context, listen: false)
+              //     .appendDisplay(widget.parentText);
+
+              buttonController(widget.parentText, context);
             },
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 12.0),
@@ -90,4 +93,19 @@ class IconasButton extends StatelessWidget {
       ),
     );
   }
+}
+
+
+void buttonController (var text, BuildContext parentContext) {
+
+var displayObject = Provider.of<Display>(parentContext, listen: false);
+switch (text) {
+  case 'C' : displayObject.updateDisplay('0');
+  break;
+
+  case '.' : displayObject.appendDisplay('.');
+  break;
+
+  default : displayObject.appendDisplay(text);
+}
 }

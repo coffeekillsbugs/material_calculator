@@ -1,16 +1,12 @@
-# Calculator [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](LICENSE)
+# Calculator [![Codemagic build status](https://api.codemagic.io/apps/5e5a1164e389930008c1dfd1/5e5a1164e389930008c1dfd0/status_badge.svg)](https://codemagic.io/apps/5e5a1164e389930008c1dfd1/5e5a1164e389930008c1dfd0/latest_build) [![platform](https://img.shields.io/badge/platform-android%20%7C%20ios-blue)]() [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 Simple calculator build with material design guidelines.
 
 ## Built With
 
-* [Flutter](http://flutter.io) - Cross-Platform Native App Framework
+* [Flutter](https://flutter.io) - Cross-Platform Native App Framework
 * [Dart](https://dart.dev)
 * [Adobe xD](https://www.adobe.com/products/xd.html) - Used to create prototype
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 

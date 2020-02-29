@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_calculator/Constants/colors.dart';
 import 'package:material_calculator/Widgets/buttons.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class ColOne extends StatelessWidget {
   @override
@@ -50,7 +49,7 @@ class ColTwo extends StatelessWidget {
         ),
         Button(
           parentColor: otherBlue,
-          parentText: 'x^y',
+          parentText: 'x\u02b8',
         ),
         Button(
           parentColor: Colors.transparent,
@@ -82,7 +81,7 @@ class ColThree extends StatelessWidget {
         IconasButton(),
         Button(
           parentColor: otherBlue,
-          parentText: 'x',
+          parentText: 'x\u00B2',
         ),
         Button(
           parentColor: Colors.transparent,
@@ -122,7 +121,7 @@ class ColFour extends StatelessWidget {
               ),
               Button(
                 parentColor: otherBlue,
-                parentText: 'X',
+                parentText: 'x',
               ),
               Button(
                 parentColor: otherBlue,
@@ -150,53 +149,3 @@ class ColFour extends StatelessWidget {
   }
 }
 
-// class ColFour extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//       children: <Widget>[
-//         Expanded(
-//           flex: 1,
-//           child: Button(
-//             parentColor: otherBlue,
-//             parentText: '/',
-//           ),
-//         ),
-//         Expanded(
-//           flex: 1,
-//           child: Button(
-//             parentColor: otherBlue,
-//             parentText: 'X',
-//           ),
-//         ),
-//         Expanded(
-//           flex: 1,
-//           child: Button(
-//             parentColor: otherBlue,
-//             parentText: '-',
-//           ),
-//         ),
-//         Expanded(
-//           flex: 1,
-//           child: Button(
-//             parentColor: otherBlue,
-//             parentText: '+',
-//           ),
-//         ),
-//         Expanded(
-//           flex: 2,
-//           child: ButtonTwo(
-//             parentColor: placidOrange,
-//             parentText: '=',
-//           ),
-//         )
-
-//         // Button(
-//         //   parentColor: placidOrange,
-//         //   parentText: '=',
-//         // ),
-//       ],
-//     );
-//   }
-// }

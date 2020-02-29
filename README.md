@@ -1,16 +1,30 @@
-# material_calculator
+# Calculator
 
-A new Flutter project.
+Simple calculator build with material design guidelines.
 
-## Getting Started
+## Built With
 
-This project is a starting point for a Flutter application.
+* [Flutter](http://flutter.io) - Cross-Platform Native App Framework
+* [Dart](https://dart.dev)
+* [Adobe xD](https://www.adobe.com/products/xd.html) - Used to create prototype
 
-A few resources to get you started if this is your first Flutter project:
+## Contributing
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Versioning
+
+[SemVer](http://semver.org/) for versioning.
+
+## Authors
+
+* **Nihar Lekhade** - *Developer* - [mistMoriarty](https://github.com/mistMoriarty)
+
+## License
+
+This project is licensed under the MIT License.
+
+## Acknowledgments
+
+Flutter Community
+

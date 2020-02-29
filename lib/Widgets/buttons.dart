@@ -1,28 +1,22 @@
-
 import 'package:flutter/material.dart';
 import 'package:material_calculator/Constants/colors.dart';
 import 'package:material_calculator/main.dart';
 import 'package:provider/provider.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-class Button extends StatefulWidget {
+class Button extends StatelessWidget {
   final parentColor;
   final parentText;
 
   Button({this.parentColor, this.parentText});
 
   @override
-  _ButtonState createState() => _ButtonState();
-}
-
-class _ButtonState extends State<Button> {
-  @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(30.0),
       child: Container(
         width: 80.0,
-        color: widget.parentColor,
+        color: parentColor,
         child: Material(
           color: Colors.transparent,
           child: InkWell(
@@ -32,14 +26,14 @@ class _ButtonState extends State<Button> {
               // Provider.of<Display>(context, listen: false)
               //     .appendDisplay(widget.parentText);
 
-              buttonController(widget.parentText, context);
+              buttonController(parentText, context);
             },
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 12.0),
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  widget.parentText,
+                  parentText,
                   style: TextStyle(
                     color: notSoWhite,
                     fontFamily: 'Righteous',
@@ -56,7 +50,6 @@ class _ButtonState extends State<Button> {
 }
 
 class IconasButton extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     String text;
@@ -72,10 +65,11 @@ class IconasButton extends StatelessWidget {
             splashColor: otherBlue,
             onTap: () {
               //print('Button pressed : ' + widget.parentText);
-             text = Provider.of<Display>(context, listen: false).getDisplay();
-             length = text.length;
+              text = Provider.of<Display>(context, listen: false).getDisplay();
+              length = text.length;
 
-             Provider.of<Display>(context, listen: false).updateDisplay(text.substring(0, length-1));
+              Provider.of<Display>(context, listen: false)
+                  .updateDisplay(text.substring(0, length - 1));
             },
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 18.0),
@@ -95,17 +89,66 @@ class IconasButton extends StatelessWidget {
   }
 }
 
+void buttonController(var text, BuildContext parentContext) {
+  var displayObject = Provider.of<Display>(parentContext, listen: false);
+  var fact;
+//var temp, result, varOne, varTwo;
 
-void buttonController (var text, BuildContext parentContext) {
+  switch (text) {
+    case 'C':
+      displayObject.updateDisplay('0');
+      break;
 
-var displayObject = Provider.of<Display>(parentContext, listen: false);
-switch (text) {
-  case 'C' : displayObject.updateDisplay('0');
-  break;
+    case '.':
+      displayObject.appendDisplay('.');
+      break;
 
-  case '.' : displayObject.appendDisplay('.');
-  break;
+    case '/':
+      {
+         displayObject.arithOp(text);
+      }
+      break;
 
-  default : displayObject.appendDisplay(text);
+    case '*':
+      {
+        displayObject.arithOp(text);
+      }
+      break;
+
+    case '-':
+      {
+        displayObject.arithOp(text);
+      }
+      break;
+
+    case '+':
+      {
+        displayObject.arithOp(text);
+      }
+      break;
+
+    case '=':
+      {
+        displayObject.result();
+      }
+      break;
+
+    case 'x!':
+      {
+        fact = factorial(int.parse(displayObject.getSecondaryDisplay()));
+        displayObject.updateDisplay(fact.toString());
+      }
+      break;
+
+    default:
+      displayObject.appendDisplay(text);
+      break;
+  }
 }
+
+int factorial(var fact) {
+  if (fact >= 1)
+    return fact * factorial(fact - 1);
+  else
+    return 1;
 }

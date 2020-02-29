@@ -13,7 +13,6 @@ class Calculator extends StatefulWidget {
 class _CalculatorState extends State<Calculator> {
   @override
   Widget build(BuildContext context) {
-    
     final display = Provider.of<Display>(context);
 
     return Stack(
@@ -36,16 +35,33 @@ class _CalculatorState extends State<Calculator> {
                     right: 10.0,
                     bottom: 10.0,
                   ),
-                  child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: Text(
-                      display.getDisplay(),
-                      style: TextStyle(
-                        color: baffllingBlue,
-                        fontSize: 45.0,
-                        fontFamily: 'Righteous',
+                  child: ListView(
+                    reverse: true,
+                    children: <Widget>[
+                      
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Text(
+                        display.getDisplay(),
+                        style: TextStyle(
+                          color: baffllingBlue,
+                          fontSize: 45.0,
+                          fontFamily: 'Righteous',
+                        ),
                       ),
                     ),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Text(
+                        display.getSecondaryDisplay(),
+                        style: TextStyle(
+                          color: baffllingBlue,
+                          fontSize: 45.0,
+                          fontFamily: 'Righteous',
+                        ),
+                      ),
+                    ),
+                    ],
                   ),
                 ),
               ),

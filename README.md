@@ -1,4 +1,4 @@
-# Calculator
+# Calculator [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](LICENSE)
 
 Simple calculator build with material design guidelines.
 

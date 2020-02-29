@@ -1,4 +1,4 @@
-# Calculator
+# Calculator [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 
 Simple calculator build with material design guidelines.
 
@@ -7,10 +7,6 @@ Simple calculator build with material design guidelines.
 * [Flutter](http://flutter.io) - Cross-Platform Native App Framework
 * [Dart](https://dart.dev)
 * [Adobe xD](https://www.adobe.com/products/xd.html) - Used to create prototype
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 

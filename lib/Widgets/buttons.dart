@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:material_calculator/Constants/colors.dart';
 import 'package:material_calculator/main.dart';
@@ -105,11 +107,11 @@ void buttonController(var text, BuildContext parentContext) {
 
     case '/':
       {
-         displayObject.arithOp(text);
+        displayObject.arithOp(text);
       }
       break;
 
-    case '*':
+    case 'x':
       {
         displayObject.arithOp(text);
       }
@@ -139,6 +141,20 @@ void buttonController(var text, BuildContext parentContext) {
         displayObject.updateDisplay(fact.toString());
       }
       break;
+
+    case 'x\u00B2':
+      {
+        fact = double.parse(displayObject.getDisplay().toString().replaceFirst('=', ''));
+        fact = fact * fact;
+        displayObject.updateDisplay(fact.toString());
+      }
+      break;
+
+    case 'x^y':
+    {
+      displayObject.arithOp('^');
+    }
+    break;
 
     default:
       displayObject.appendDisplay(text);

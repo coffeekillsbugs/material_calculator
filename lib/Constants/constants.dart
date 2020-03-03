@@ -29,8 +29,9 @@ class ColOne extends StatelessWidget {
           parentText: '1',
         ),
         Button(
-          parentColor: otherBlue,
-          parentText: 'e',
+          parentColor: baffllingBlue,
+          //parentText: 'e',
+          parentText: '',
         ),
       ],
     );
@@ -49,7 +50,7 @@ class ColTwo extends StatelessWidget {
         ),
         Button(
           parentColor: otherBlue,
-          parentText: 'x\u02b8',
+          parentText: 'x^y',
         ),
         Button(
           parentColor: Colors.transparent,

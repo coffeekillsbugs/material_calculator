@@ -91,32 +91,32 @@ class _CalculatorState extends State<Calculator> {
           ),
         ),
         // * Menu Icon * //
-        Padding(
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.vertical + 5,
-            left: 5.0,
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(30.0),
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                splashColor: placidOrange,
-                onTap: () {
-                  // TODO : Open Drawbar
-                },
-                child: Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: Icon(
-                    MdiIcons.sortVariant,
-                    color: baffllingBlue,
-                    size: 40.0,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
+        // Padding(
+        //   padding: EdgeInsets.only(
+        //     top: MediaQuery.of(context).padding.vertical + 5,
+        //     left: 5.0,
+        //   ),
+        //   child: ClipRRect(
+        //     borderRadius: BorderRadius.circular(30.0),
+        //     child: Material(
+        //       color: Colors.transparent,
+        //       child: InkWell(
+        //         splashColor: placidOrange,
+        //         onTap: () {
+        //           // TODO : Open Drawbar
+        //         },
+        //         child: Padding(
+        //           padding: EdgeInsets.all(5.0),
+        //           child: Icon(
+        //             MdiIcons.sortVariant,
+        //             color: baffllingBlue,
+        //             size: 40.0,
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

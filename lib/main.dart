@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:material_calculator/Screens/calculator.dart';
+import 'package:material_calculator/screens/calculator.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());

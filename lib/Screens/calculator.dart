@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:material_calculator/Constants/colors.dart';
-import 'package:material_calculator/Constants/constants.dart';
+import 'package:material_calculator/theme/colors.dart';
+import 'package:material_calculator/models/constants.dart';
 import 'package:material_calculator/main.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
 class Calculator extends StatefulWidget {

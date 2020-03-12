@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:material_calculator/Constants/colors.dart';
-import 'package:material_calculator/Widgets/buttons.dart';
+import 'package:material_calculator/theme/colors.dart';
+import 'package:material_calculator/components/buttons.dart';
 
 class ColOne extends StatelessWidget {
   @override

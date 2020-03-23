@@ -1,44 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:material_calculator/theme/colors.dart';
-import 'package:material_calculator/main.dart';
-import 'package:provider/provider.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class Button extends StatelessWidget {
   final parentColor;
-  final parentText;
+  final function;
 
-  Button({this.parentColor, this.parentText});
+  Button({this.parentColor, this.function});
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(30.0),
       child: Container(
-        width: 80.0,
+        width: MediaQuery.of(context).size.height * 0.125,  // 16:11 ratio for width to height (80.0/55.0)
+        height: MediaQuery.of(context).size.height * 0.125 * 0.6875,
         color: parentColor,
         child: Material(
           color: Colors.transparent,
           child: InkWell(
             splashColor: otherBlue,
             onTap: () {
-              //print('Button pressed : ' + widget.parentText);
-              // Provider.of<Display>(context, listen: false)
-              //     .appendDisplay(widget.parentText);
-
-              buttonController(parentText, context);
+              //TODO: 
             },
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 12.0),
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  parentText,
-                  style: TextStyle(
-                    color: notSoWhite,
-                    fontFamily: 'Righteous',
-                    fontSize: 30.0,
-                  ),
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                function.toString(),
+                style: TextStyle(
+                  color: notSoWhite,
+                  fontFamily: 'Righteous',
+                  fontSize: 30.0,
                 ),
               ),
             ),
@@ -52,34 +44,25 @@ class Button extends StatelessWidget {
 class IconasButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    String text;
-    int length;
     return ClipRRect(
       borderRadius: BorderRadius.circular(30.0),
       child: Container(
-        width: 80.0,
+        width: MediaQuery.of(context).size.height * 0.125,  // 16:11 ratio for width to height (80.0/55.0)
+        height: MediaQuery.of(context).size.height * 0.125 * 0.6875,
         color: placidOrange,
         child: Material(
           color: Colors.transparent,
           child: InkWell(
             splashColor: otherBlue,
             onTap: () {
-              //print('Button pressed : ' + widget.parentText);
-              text = Provider.of<Display>(context, listen: false).getDisplay();
-              length = text.length;
-
-              Provider.of<Display>(context, listen: false)
-                  .updateDisplay(text.substring(0, length - 1));
+              //TODO : Orange button functions
             },
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 18.0),
-              child: Align(
-                alignment: Alignment.center,
-                child: Icon(
-                  MdiIcons.backspace,
-                  size: 20.0,
-                  color: notSoWhite,
-                ),
+            child: Align(
+              alignment: Alignment.center,
+              child: Icon(
+                MdiIcons.backspace,
+                size: 20.0,
+                color: notSoWhite,
               ),
             ),
           ),
@@ -89,80 +72,41 @@ class IconasButton extends StatelessWidget {
   }
 }
 
-void buttonController(var text, BuildContext parentContext) {
-  var displayObject = Provider.of<Display>(parentContext, listen: false);
-  var fact;
-//var temp, result, varOne, varTwo;
+class ResultButton extends StatelessWidget {
+  final parentColor;
+  final function;
 
-  switch (text) {
-    case 'C':
-      displayObject.updateDisplay('0');
-      break;
+  ResultButton({this.parentColor, this.function});
 
-    case '.':
-      displayObject.appendDisplay('.');
-      break;
-
-    case '/':
-      {
-        displayObject.arithOp(text);
-      }
-      break;
-
-    case 'x':
-      {
-        displayObject.arithOp(text);
-      }
-      break;
-
-    case '-':
-      {
-        displayObject.arithOp(text);
-      }
-      break;
-
-    case '+':
-      {
-        displayObject.arithOp(text);
-      }
-      break;
-
-    case '=':
-      {
-        displayObject.result();
-      }
-      break;
-
-    case 'x!':
-      {
-        fact = factorial(int.parse(displayObject.getSecondaryDisplay()));
-        displayObject.updateDisplay(fact.toString());
-      }
-      break;
-
-    case 'x\u00B2':
-      {
-        fact = double.parse(displayObject.getDisplay().toString().replaceFirst('=', ''));
-        fact = fact * fact;
-        displayObject.updateDisplay(fact.toString());
-      }
-      break;
-
-    case 'x^y':
-    {
-      displayObject.arithOp('^');
-    }
-    break;
-
-    default:
-      displayObject.appendDisplay(text);
-      break;
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(30.0),
+      child: Container(
+        width: MediaQuery.of(context).size.height * 0.125,  // 2:3 ratio for width to height (80.0/120.0)
+        height: MediaQuery.of(context).size.height * 0.125 * 1.5,
+        color: parentColor,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            splashColor: otherBlue,
+            onTap: () {
+              //TODO: 
+            },
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                function.toString(),
+                style: TextStyle(
+                  color: notSoWhite,
+                  fontFamily: 'Righteous',
+                  fontSize: 30.0,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
-}
-
-int factorial(var fact) {
-  if (fact >= 1)
-    return fact * factorial(fact - 1);
-  else
-    return 1;
 }

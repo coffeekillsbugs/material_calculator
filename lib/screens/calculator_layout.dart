@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:material_calculator/theme/colors.dart';
 import 'package:material_calculator/models/constants.dart';
-import 'package:material_calculator/main.dart';
-import 'package:provider/provider.dart';
 
-class Calculator extends StatefulWidget {
+class CalculatorLayout extends StatefulWidget {
   @override
-  _CalculatorState createState() => _CalculatorState();
+  _CalculatorLayoutState createState() => _CalculatorLayoutState();
 }
 
-class _CalculatorState extends State<Calculator> {
+class _CalculatorLayoutState extends State<CalculatorLayout> {
   @override
   Widget build(BuildContext context) {
-    final display = Provider.of<Display>(context);
-
     return Stack(
       children: <Widget>[
         // * Calculator body *//
@@ -35,31 +31,39 @@ class _CalculatorState extends State<Calculator> {
                     bottom: 10.0,
                   ),
                   child: ListView(
+                    //crossAxisAlignment: CrossAxisAlignment.end,
                     reverse: true,
                     children: <Widget>[
-                      
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Text(
-                        display.getDisplay(),
-                        style: TextStyle(
-                          color: baffllingBlue,
-                          fontSize: 45.0,
-                          fontFamily: 'Righteous',
+                      // *--- Active Display *--- //
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: Text(
+                          'primary display',
+                          textAlign: TextAlign.right,
+                          overflow: TextOverflow.fade,
+                          style: TextStyle(
+                            color: baffllingBlue,
+                            fontSize: 45.0,
+                            fontFamily: 'Righteous',
+                          ),
                         ),
                       ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Text(
-                        display.getSecondaryDisplay(),
-                        style: TextStyle(
-                          color: baffllingBlue,
-                          fontSize: 45.0,
-                          fontFamily: 'Righteous',
+                      SizedBox(
+                        height: 40.0,
+                      ),
+                      // *--- Display history ---* //
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: Text(
+                          'calc history',
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            color: baffllingBlue.withOpacity(0.6),
+                            fontSize: 30.0,
+                            fontFamily: 'Righteous',
+                          ),
                         ),
                       ),
-                    ),
                     ],
                   ),
                 ),

@@ -10,28 +10,28 @@ class ColOne extends StatelessWidget {
       children: <Widget>[
         Button(
           parentColor: placidOrange,
-          parentText: 'AC',
+          function: 'AC',
         ),
         Button(
           parentColor: otherBlue,
-          parentText: 'x!',
+          function: 'x!',
         ),
         Button(
           parentColor: Colors.transparent,
-          parentText: '7',
+          function: 7,
         ),
         Button(
           parentColor: Colors.transparent,
-          parentText: '4',
+          function: 4,
         ),
         Button(
           parentColor: Colors.transparent,
-          parentText: '1',
+          function: 1,
         ),
         Button(
           parentColor: baffllingBlue,
-          //parentText: 'e',
-          parentText: '',
+          //function: 'e',
+          function: '',
         ),
       ],
     );
@@ -46,27 +46,27 @@ class ColTwo extends StatelessWidget {
       children: <Widget>[
         Button(
           parentColor: placidOrange,
-          parentText: 'C',
+          function: 'C',
         ),
         Button(
           parentColor: otherBlue,
-          parentText: 'x^y',
+          function: 'x^y',
         ),
         Button(
           parentColor: Colors.transparent,
-          parentText: '8',
+          function: 8,
         ),
         Button(
           parentColor: Colors.transparent,
-          parentText: '5',
+          function: 5,
         ),
         Button(
           parentColor: Colors.transparent,
-          parentText: '2',
+          function: 2,
         ),
         Button(
           parentColor: Colors.transparent,
-          parentText: '0',
+          function: 0,
         ),
       ],
     );
@@ -82,23 +82,23 @@ class ColThree extends StatelessWidget {
         IconasButton(),
         Button(
           parentColor: otherBlue,
-          parentText: 'x\u00B2',
+          function: 'x\u00B2',
         ),
         Button(
           parentColor: Colors.transparent,
-          parentText: '9',
+          function: 9,
         ),
         Button(
           parentColor: Colors.transparent,
-          parentText: '6',
+          function: 6,
         ),
         Button(
           parentColor: Colors.transparent,
-          parentText: '3',
+          function: 3,
         ),
         Button(
           parentColor: otherBlue,
-          parentText: '.',
+          function: '.',
         ),
       ],
     );
@@ -111,39 +111,25 @@ class ColFour extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Expanded(
-          flex: 2,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Button(
-                parentColor: otherBlue,
-                parentText: '/',
-              ),
-              Button(
-                parentColor: otherBlue,
-                parentText: 'x',
-              ),
-              Button(
-                parentColor: otherBlue,
-                parentText: '-',
-              ),
-              Button(
-                parentColor: otherBlue,
-                parentText: '+',
-              ),
-            ],
-          ),
+        Button(
+          parentColor: otherBlue,
+          function: '/',
         ),
-        Expanded(
-          flex: 1,
-          child: Padding(
-            padding: EdgeInsets.only(top: 10.0),
-            child: Button(
-              parentColor: placidOrange,
-              parentText: '=',
-            ),
-          ),
+        Button(
+          parentColor: otherBlue,
+          function: 'x',
+        ),
+        Button(
+          parentColor: otherBlue,
+          function: '-',
+        ),
+        Button(
+          parentColor: otherBlue,
+          function: '+',
+        ),
+        ResultButton(
+          parentColor: placidOrange,
+          function: '=',
         )
       ],
     );

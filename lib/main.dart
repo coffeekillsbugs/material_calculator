@@ -1,10 +1,16 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:material_calculator/screens/calculator.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
+import 'package:material_calculator/screens/calculator_layout.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+    ),
+  );
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -12,98 +18,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ChangeNotifierProvider<Display>(
-        create: (context) => Display(),
-        child: Calculator(),
-      ),
+      home: CalculatorLayout(),
     );
   }
 }
 
-class Display extends ChangeNotifier {
-  String _displayText = '0';
-  String _secondDisplayText = '';
 
-  var _temp, _tempTwo = '', operation = '+', _varOne, _varTwo, _result = 0.0;
-
-  getDisplay() => _displayText;
-
-  getSecondaryDisplay() => _secondDisplayText;
-
-  //getTempHolder() => _tempHolder;
-
-  appendDisplay(String displayText) {
-    if (displayText != operation) _tempTwo = _tempTwo + displayText;
-
-    if (_displayText == '0') {
-      _secondDisplayText = displayText;
-      //_tempHolder = displayText;
-      _displayText = '=' + displayText;
-    } else {
-      _secondDisplayText = _secondDisplayText + displayText;
-      _displayText = _displayText + displayText;
-    }
-
-    notifyListeners();
-  }
-
-  updateDisplay(String displayText) {
-    displayText == '' ? _displayText = '0' : _displayText = displayText;
-    _secondDisplayText = '';
-
-    // if(displayText == ''){
-    //   _displayText = '0';
-    //   _secondDisplayText = '';
-    // }
-    // else {
-    //   _tempHolder = displayText;
-    //   _displayText = '=' + displayText;
-    //   //_secondDisplayText = '';
-    // }
-
-    notifyListeners();
-  }
-
-  arithOp(var text) {
-    operation = text;
-
-    _secondDisplayText == ''
-        ? _temp = _displayText
-        : _temp = _secondDisplayText;
-
-    appendDisplay(text);
-    _varOne = double.parse(_temp);
-    _tempTwo = '';
-    //notifyListeners();
-  }
-
-  result() {
-    _varTwo = double.parse(_tempTwo);
-
-    switch (operation) {
-      case '/':
-        _result = _varOne / _varTwo;
-        break;
-
-      case 'x':
-        _result = _varOne * _varTwo;
-        break;
-
-      case '-':
-        _result = _varOne - _varTwo;
-        break;
-
-      case '+':
-        _result = _varOne + _varTwo;
-        break;
-
-      case '^':
-        _result = pow(_varOne, _varTwo);
-        break;
-    }
-    _displayText = '=' + _result.toString();
-    //updateDisplay(_result.toString());
-
-    notifyListeners();
-  }
-}
+//Todo : get default system font and adjust app font accordingly

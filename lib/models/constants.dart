@@ -8,27 +8,27 @@ class ColOne extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Button(
+        Operation(
           parentColor: placidOrange,
           function: 'AC',
         ),
-        Button(
+        Operation(
           parentColor: otherBlue,
           function: 'x!',
         ),
-        Button(
+        NumberButton(
           parentColor: Colors.transparent,
           function: 7,
         ),
-        Button(
+        NumberButton(
           parentColor: Colors.transparent,
           function: 4,
         ),
-        Button(
+        NumberButton(
           parentColor: Colors.transparent,
           function: 1,
         ),
-        Button(
+        Operation(
           parentColor: baffllingBlue,
           //function: 'e',
           function: '',
@@ -44,27 +44,27 @@ class ColTwo extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Button(
+        Operation(
           parentColor: placidOrange,
           function: 'C',
         ),
-        Button(
+        Operation(
           parentColor: otherBlue,
           function: 'x^y',
         ),
-        Button(
+        NumberButton(
           parentColor: Colors.transparent,
           function: 8,
         ),
-        Button(
+        NumberButton(
           parentColor: Colors.transparent,
           function: 5,
         ),
-        Button(
+        NumberButton(
           parentColor: Colors.transparent,
           function: 2,
         ),
-        Button(
+        NumberButton(
           parentColor: Colors.transparent,
           function: 0,
         ),
@@ -80,23 +80,23 @@ class ColThree extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         IconasButton(),
-        Button(
+        Operation(
           parentColor: otherBlue,
           function: 'x\u00B2',
         ),
-        Button(
+        NumberButton(
           parentColor: Colors.transparent,
           function: 9,
         ),
-        Button(
+        NumberButton(
           parentColor: Colors.transparent,
           function: 6,
         ),
-        Button(
+        NumberButton(
           parentColor: Colors.transparent,
           function: 3,
         ),
-        Button(
+        Operation(
           parentColor: otherBlue,
           function: '.',
         ),
@@ -111,19 +111,19 @@ class ColFour extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Button(
+        Operation(
           parentColor: otherBlue,
           function: '/',
         ),
-        Button(
+        Operation(
           parentColor: otherBlue,
           function: 'x',
         ),
-        Button(
+        Operation(
           parentColor: otherBlue,
           function: '-',
         ),
-        Button(
+        Operation(
           parentColor: otherBlue,
           function: '+',
         ),

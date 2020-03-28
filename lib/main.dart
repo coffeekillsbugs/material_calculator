@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:material_calculator/screens/calculator_layout.dart';
+import 'package:material_calculator/services/computations.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: CalculatorLayout(),
+      home: ChangeNotifierProvider(create: (context) => Compute(),child: CalculatorLayout()),
     );
   }
 }

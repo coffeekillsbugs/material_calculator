@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:material_calculator/services/computations.dart';
 import 'package:material_calculator/theme/colors.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
 
-class Button extends StatelessWidget {
+class Operation extends StatelessWidget {
   final parentColor;
   final function;
 
-  Button({this.parentColor, this.function});
+  Operation({this.parentColor, this.function});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class Button extends StatelessWidget {
           child: InkWell(
             splashColor: otherBlue,
             onTap: () {
-              //TODO: 
+              //Provider.of<Compute>(context, listen: false).dartPad();
             },
             child: Align(
               alignment: Alignment.center,
@@ -55,7 +57,7 @@ class IconasButton extends StatelessWidget {
           child: InkWell(
             splashColor: otherBlue,
             onTap: () {
-              //TODO : Orange button functions
+              Provider.of<Compute>(context, listen: false).backspace();
             },
             child: Align(
               alignment: Alignment.center,
@@ -91,7 +93,8 @@ class ResultButton extends StatelessWidget {
           child: InkWell(
             splashColor: otherBlue,
             onTap: () {
-              //TODO: 
+              print('Result button pressed');
+              //Provider.of<Compute>(context, listen:false).pointMan();
             },
             child: Align(
               alignment: Alignment.center,
@@ -110,3 +113,44 @@ class ResultButton extends StatelessWidget {
     );
   }
 }
+
+class NumberButton extends StatelessWidget {
+  final parentColor;
+  final function;
+
+  NumberButton({this.parentColor, this.function});
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(30.0),
+      child: Container(
+        width: MediaQuery.of(context).size.height * 0.125,  // 16:11 ratio for width to height (80.0/55.0)
+        height: MediaQuery.of(context).size.height * 0.125 * 0.6875,
+        color: parentColor,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            splashColor: otherBlue,
+            onTap: () {
+              Provider.of<Compute>(context, listen: false).appendCalCur(function.toString());
+            },
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                function.toString(),
+                style: TextStyle(
+                  color: notSoWhite,
+                  fontFamily: 'Righteous',
+                  fontSize: 30.0,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+

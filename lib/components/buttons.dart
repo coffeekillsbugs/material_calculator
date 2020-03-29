@@ -23,7 +23,7 @@ class Operation extends StatelessWidget {
           child: InkWell(
             splashColor: otherBlue,
             onTap: () {
-              //Provider.of<Compute>(context, listen: false).dartPad();
+              Provider.of<Compute>(context, listen: false).appendCalCur(function);
             },
             child: Align(
               alignment: Alignment.center,
@@ -94,7 +94,7 @@ class ResultButton extends StatelessWidget {
             splashColor: otherBlue,
             onTap: () {
               print('Result button pressed');
-              //Provider.of<Compute>(context, listen:false).pointMan();
+              Provider.of<Compute>(context, listen:false).pointRunner();
             },
             child: Align(
               alignment: Alignment.center,

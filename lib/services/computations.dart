@@ -2,42 +2,20 @@ import 'package:flutter/material.dart';
 
 class Compute extends ChangeNotifier {
   String calCur = '0', calHis = '';
-  var twentyFour, twentyFive, twentySix;
-  int flag = 0;
-
-  //* Shunting Yard Algo
-  String test = ('3+2*4+5');
-
-  RegExp re = RegExp(r'^[0-9]+$');
-
-  String post = '';
+  //var twentyFour, twentyFive, twentySix;
+  var twentySix;
+  //int flag = 0;
+  List<String> post = List();
+  String holder = '';
   String opStack = '';
-  String temp;
 
   int top = -1;
-  //* Shunting Yard Algo END
 
-  void cal(String op) {
-    switch (op) {
-      case '+':
-        twentySix = twentyFour + twentyFive;
-        break;
+  List<String> numberStack = List();
+  double rightOprand, leftOprand;
+  double result;
 
-      case '-':
-        twentySix = twentyFour - twentyFive;
-        break;
-
-      case '/':
-        twentySix = twentyFour / twentyFive;
-        break;
-
-      case 'x':
-        twentySix = twentyFour * twentyFive;
-        break;
-
-      default:
-    }
-  }
+  RegExp re = RegExp(r'^[0-9]+$');
 
   void appendCalCur(var data) {
     if (calCur == '0') {
@@ -47,67 +25,136 @@ class Compute extends ChangeNotifier {
     notifyListeners();
   }
 
-  result() => twentySix;
+  //result() => twentySix;
 
   String getDisplay() => calCur;
 
   String getHistory() => calHis;
 
   void backspace() {
-    if (calCur.isNotEmpty && calCur != '0')
-      calCur.substring(0, calCur.length - 1);
-    else
+    if (calCur == '' || calCur.isEmpty)
       calCur = '0';
+    else
+      calCur = calCur.substring(0, calCur.length - 1);
 
     notifyListeners();
   }
+
+  void pointRunner() {
+    String test;
+    test = calCur;
+    for (int i = 0; i < test.length; i++) {
+      if (re.hasMatch(test[i])) {
+        holder += test[i];
+      } else {
+        post.add(holder);
+        holder = '';
+        stackCheck(test[i]);
+      }
+    }
+    post.add(holder);
+    if (opStack.isNotEmpty) {
+      while (top != -1) {
+        post.add(opStack[top]);
+        --top;
+      }
+    }
+    print(post);
+    top = -1;
+    rpnEvaluator();
+  }
+
+  void stackCheck(String c) {
+    if (opStack.isEmpty) {
+      opStack += c;
+      top = opStack.length - 1;
+    } else {
+      if (precedence(opStack[top]) < precedence(c)) {
+        opStack += c;
+        top = opStack.length - 1;
+      } else {
+        while (opStack.length >= 1) {
+          //print('top:' + opStack[top]);
+          post.add(opStack[top]);
+          //print('ppost:' + post);
+          opStack = opStack.substring(0, top);
+          //print('opstack: ' + opStack);
+          //opStack += c;
+          top = opStack.length - 1;
+          //stackCheck(c);
+        }
+        opStack += c;
+        top = opStack.length - 1;
+      }
+    }
+  }
+
+  int precedence(String pre) {
+    switch (pre) {
+      case '^':
+        return 4;
+      case '*':
+        return 3;
+      case '/':
+        return 3;
+      case '~':
+        return 3;
+      case '+':
+        return 2;
+      case '-':
+        return 2;
+      case '=':
+        return 1;
+      default:
+        return 1;
+    }
+  }
+
+  void rpnEvaluator() {
+    for (int i = 0; i < post.length; i++) {
+      print('Start of $i');
+      if (re.hasMatch(post[i][0])) {
+        numberStack.add(post[i]);
+        //print(numberStack);
+      } else {
+        if (numberStack.isNotEmpty) {
+          top = numberStack.length - 1;
+          rightOprand = double.parse(numberStack[top]);
+          leftOprand = double.parse(numberStack[top - 1]);
+          result = calc(leftOprand, rightOprand, post[i]);
+
+          //numberStack = numberStack.substring(0,numberStack.length - 2);
+          numberStack.removeLast();
+          //print(numberStack);
+          numberStack.removeLast();
+          //print(numberStack);
+          numberStack.add(result.toString());
+          //print('Number Stack after opration : ' + numberStack);
+          //top = numberStack.length - 1;
+        } else {
+          //print('String Empty, something has gone wrong');
+        }
+      }
+      //print('End of $i.');
+    }
+    print(numberStack);
+    twentySix = numberStack[0].toString();
+    calCur = calCur + '\n=' + twentySix;
+    notifyListeners();
+  }
+
+  double calc(double lOprand, double rOprand, String op) {
+    switch (op) {
+      case '+':
+        return lOprand + rOprand;
+      case '-':
+        return lOprand - rOprand;
+      case '*':
+        return lOprand * rOprand;
+      case '/':
+        return lOprand / rOprand;
+      default:
+        return 0.0;
+    }
+  }
 }
-
-// class OperatorStack {
-//   //static const int max = 100;
-//   int _top = -1;
-//   String temp;
-//   int _start = 0;
-
-//   List<String> operatorStack = List();
-//   // *--- Reverse Polish Notation Queue ---* //
-//   List<String> _postfixExp = List();
-//   // *--- Reverse Polish Notation Queue ---* //
-//   List<String> _numberStack = List();
-
-//   RegExp re = RegExp(r'^[0-9]+$');
-
-//   bool push(String data) {
-//     operatorStack.add(data);
-//     ++_top;
-//     return true;
-//   }
-
-//   bool pop() {
-//     if (_top == -1) {
-//       print('Error in pop operation. Stack empty');
-//       return false;
-//     }
-
-//     temp = operatorStack.removeAt(_top);
-//     --_top;
-//     print(temp);
-//     return true;
-//   }
-
-//   String peek() {
-//     return operatorStack[_top];
-//   }
-
-//   //* RPN Queue
-//   bool pushQueue(String data) {
-//     _postfixExp.add(data);
-//     return true;
-//   }
-
-//   // void rpnEvaluator() {
-//   //   while (_postfixExp.isNotEmpty) {
-//   //     if(re.hasMatch(_postfixExp))
-//   //   }
-//   // }
-// }

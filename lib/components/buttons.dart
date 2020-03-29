@@ -15,7 +15,8 @@ class Operation extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(30.0),
       child: Container(
-        width: MediaQuery.of(context).size.height * 0.125,  // 16:11 ratio for width to height (80.0/55.0)
+        width: MediaQuery.of(context).size.height *
+            0.125, // 16:11 ratio for width to height (80.0/55.0)
         height: MediaQuery.of(context).size.height * 0.125 * 0.6875,
         color: parentColor,
         child: Material(
@@ -23,7 +24,15 @@ class Operation extends StatelessWidget {
           child: InkWell(
             splashColor: otherBlue,
             onTap: () {
-              Provider.of<Compute>(context, listen: false).appendCalCur(function);
+              //
+
+              if (function == 'C') {
+                Provider.of<Compute>(context, listen: false).clearPrimary();
+              } else if (function == 'x^y') {
+                //TODO : x to power y function
+              } else
+                Provider.of<Compute>(context, listen: false)
+                    .appendCalCur(function);
             },
             child: Align(
               alignment: Alignment.center,
@@ -49,7 +58,8 @@ class IconasButton extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(30.0),
       child: Container(
-        width: MediaQuery.of(context).size.height * 0.125,  // 16:11 ratio for width to height (80.0/55.0)
+        width: MediaQuery.of(context).size.height *
+            0.125, // 16:11 ratio for width to height (80.0/55.0)
         height: MediaQuery.of(context).size.height * 0.125 * 0.6875,
         color: placidOrange,
         child: Material(
@@ -79,13 +89,13 @@ class ResultButton extends StatelessWidget {
   final function;
 
   ResultButton({this.parentColor, this.function});
-
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(30.0),
       child: Container(
-        width: MediaQuery.of(context).size.height * 0.125,  // 2:3 ratio for width to height (80.0/120.0)
+        width: MediaQuery.of(context).size.height *
+            0.125, // 2:3 ratio for width to height (80.0/120.0)
         height: MediaQuery.of(context).size.height * 0.125 * 1.5,
         color: parentColor,
         child: Material(
@@ -94,7 +104,18 @@ class ResultButton extends StatelessWidget {
             splashColor: otherBlue,
             onTap: () {
               print('Result button pressed');
-              Provider.of<Compute>(context, listen:false).pointRunner();
+              var counter = Provider.of<Compute>(context, listen: false);
+              if (counter.returnCounter() == 0) {
+                counter.pointRunner();
+                 counter.changeCounter();
+                 print('counter called from resultbutton when its 0 -> 1');
+              } else{
+                counter.transferToHistory();
+                counter.changeCounter();
+                print('counter called from numberbutton when its 1 -> 0');
+              }
+                
+              
             },
             child: Align(
               alignment: Alignment.center,
@@ -125,7 +146,8 @@ class NumberButton extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(30.0),
       child: Container(
-        width: MediaQuery.of(context).size.height * 0.125,  // 16:11 ratio for width to height (80.0/55.0)
+        width: MediaQuery.of(context).size.height *
+            0.125, // 16:11 ratio for width to height (80.0/55.0)
         height: MediaQuery.of(context).size.height * 0.125 * 0.6875,
         color: parentColor,
         child: Material(
@@ -133,7 +155,17 @@ class NumberButton extends StatelessWidget {
           child: InkWell(
             splashColor: otherBlue,
             onTap: () {
-              Provider.of<Compute>(context, listen: false).appendCalCur(function.toString());
+              var counter = Provider.of<Compute>(context, listen: false);
+
+              if (counter.returnCounter() == 0) {
+                Provider.of<Compute>(context, listen: false)
+                    .appendCalCur(function.toString());
+              } else {
+                counter.transferToHistory();
+                counter.changeCounter();
+                print('counter called from numberbutton');
+                counter.appendCalCur(function.toString());
+              }
             },
             child: Align(
               alignment: Alignment.center,
@@ -152,5 +184,3 @@ class NumberButton extends StatelessWidget {
     );
   }
 }
-
-

@@ -17,6 +17,17 @@ class Compute extends ChangeNotifier {
 
   RegExp re = RegExp(r'^[0-9]+$');
 
+  int resultPressCounter = 0;
+
+  void changeCounter() {
+    if(resultPressCounter == 0)
+    resultPressCounter = 1;
+    else resultPressCounter = 0;
+    notifyListeners();
+  }
+
+  int returnCounter() => resultPressCounter;
+
   void appendCalCur(var data) {
     if (calCur == '0') {
       calCur = data;
@@ -31,6 +42,17 @@ class Compute extends ChangeNotifier {
 
   String getHistory() => calHis;
 
+  void clearPrimary() {
+    calCur = '0';
+    notifyListeners();
+  }
+
+  void transferToHistory() {
+    calHis += calCur.replaceFirst(new RegExp(r'\n'), '') + '\n';
+    calCur = '0';
+    notifyListeners();
+  }
+
   void backspace() {
     if (calCur == '' || calCur.isEmpty)
       calCur = '0';
@@ -40,9 +62,11 @@ class Compute extends ChangeNotifier {
     notifyListeners();
   }
 
+  // *---Shunting Yard Algorithm---* //
   void pointRunner() {
     String test;
     test = calCur;
+    //TODO calculation for floating point numbers (3.23), which has decimal point
     for (int i = 0; i < test.length; i++) {
       if (re.hasMatch(test[i])) {
         holder += test[i];
@@ -93,7 +117,7 @@ class Compute extends ChangeNotifier {
     switch (pre) {
       case '^':
         return 4;
-      case '*':
+      case 'x':
         return 3;
       case '/':
         return 3;
@@ -110,9 +134,11 @@ class Compute extends ChangeNotifier {
     }
   }
 
+  // *---Shunting Yard Algorithm END---* //
+
   void rpnEvaluator() {
     for (int i = 0; i < post.length; i++) {
-      print('Start of $i');
+      //print('Start of $i');
       if (re.hasMatch(post[i][0])) {
         numberStack.add(post[i]);
         //print(numberStack);
@@ -140,6 +166,7 @@ class Compute extends ChangeNotifier {
     print(numberStack);
     twentySix = numberStack[0].toString();
     calCur = calCur + '\n=' + twentySix;
+    clearVariable();
     notifyListeners();
   }
 
@@ -149,12 +176,18 @@ class Compute extends ChangeNotifier {
         return lOprand + rOprand;
       case '-':
         return lOprand - rOprand;
-      case '*':
+      case 'x':
         return lOprand * rOprand;
       case '/':
         return lOprand / rOprand;
       default:
         return 0.0;
     }
+  }
+
+  void clearVariable() {
+    post.clear();
+    numberStack.clear();
+    holder = '';
   }
 }

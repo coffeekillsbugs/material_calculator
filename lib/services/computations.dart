@@ -189,5 +189,6 @@ class Compute extends ChangeNotifier {
     post.clear();
     numberStack.clear();
     holder = '';
+    opStack = '';
   }
 }

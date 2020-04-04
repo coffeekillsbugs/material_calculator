@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:material_calculator/services/computations.dart';
 import 'package:material_calculator/theme/colors.dart';
@@ -24,15 +26,27 @@ class Operation extends StatelessWidget {
           child: InkWell(
             splashColor: otherBlue,
             onTap: () {
-              //
+              
+              switch (function) {
+                case 'C':
+                  Provider.of<Compute>(context, listen: false).clearPrimary();
+                  break;
 
-              if (function == 'C') {
-                Provider.of<Compute>(context, listen: false).clearPrimary();
-              } else if (function == 'x^y') {
-                //TODO : x to power y function
-              } else
-                Provider.of<Compute>(context, listen: false)
-                    .appendCalCur(function);
+                case 'AC':
+                  Provider.of<Compute>(context, listen: false).allClear();
+                  break;
+
+                case 'x\u00B2': Provider.of<Compute>(context, listen: false).computeSquare();
+                  break;
+
+                case 'x\u207f': Provider.of<Compute>(context, listen: false).appendCalCur('^');
+                  break;
+
+                default:
+                  Provider.of<Compute>(context, listen: false)
+                      .appendCalCur(function);
+                  break;
+              }
             },
             child: Align(
               alignment: Alignment.center,
@@ -53,6 +67,12 @@ class Operation extends StatelessWidget {
 }
 
 class IconasButton extends StatelessWidget {
+  final parentIcon;
+  final parentColor;
+  final parentFunction;
+
+  IconasButton({this.parentColor, this.parentFunction, this.parentIcon});
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -61,19 +81,22 @@ class IconasButton extends StatelessWidget {
         width: MediaQuery.of(context).size.height *
             0.125, // 16:11 ratio for width to height (80.0/55.0)
         height: MediaQuery.of(context).size.height * 0.125 * 0.6875,
-        color: placidOrange,
+        color: parentColor,
         child: Material(
           color: Colors.transparent,
           child: InkWell(
             splashColor: otherBlue,
             onTap: () {
-              Provider.of<Compute>(context, listen: false).backspace();
+              if (parentFunction == 'back')
+                Provider.of<Compute>(context, listen: false).backspace();
+              else
+                Provider.of<Compute>(context, listen: false).computeRoot();
             },
             child: Align(
               alignment: Alignment.center,
               child: Icon(
-                MdiIcons.backspace,
-                size: 20.0,
+                parentIcon,
+                size: parentIcon == MdiIcons.backspace ? 20.0 : 35.0,
                 color: notSoWhite,
               ),
             ),
@@ -107,15 +130,13 @@ class ResultButton extends StatelessWidget {
               var counter = Provider.of<Compute>(context, listen: false);
               if (counter.returnCounter() == 0) {
                 counter.pointRunner();
-                 counter.changeCounter();
-                 print('counter called from resultbutton when its 0 -> 1');
-              } else{
+                counter.changeCounter();
+                print('counter called from resultbutton when its 0 -> 1');
+              } else {
                 counter.transferToHistory();
                 counter.changeCounter();
                 print('counter called from numberbutton when its 1 -> 0');
               }
-                
-              
             },
             child: Align(
               alignment: Alignment.center,
@@ -156,7 +177,7 @@ class NumberButton extends StatelessWidget {
             splashColor: otherBlue,
             onTap: () {
               var counter = Provider.of<Compute>(context, listen: false);
-
+//TODO : learn about licenses
               if (counter.returnCounter() == 0) {
                 Provider.of<Compute>(context, listen: false)
                     .appendCalCur(function.toString());

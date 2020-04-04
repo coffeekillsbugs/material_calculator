@@ -1,6 +1,14 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:material_calculator/services/computations.dart';
 import 'package:material_calculator/theme/colors.dart';
 import 'package:material_calculator/components/buttons.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
+
+List<FontFeature> powerY = [FontFeature.enable('sups')];
+List<FontFeature> square = [FontFeature.enable('sups')];
 
 class ColOne extends StatelessWidget {
   @override
@@ -10,11 +18,12 @@ class ColOne extends StatelessWidget {
       children: <Widget>[
         Operation(
           parentColor: placidOrange,
-          function: 'AC',
+          function: Provider.of<Compute>(context, listen: false).returnClear(),
         ),
-        Operation(
+        IconasButton(
           parentColor: otherBlue,
-          function: 'x!',
+          parentFunction: 'x/x',
+          parentIcon: MdiIcons.squareRoot,
         ),
         NumberButton(
           parentColor: Colors.transparent,
@@ -46,11 +55,11 @@ class ColTwo extends StatelessWidget {
       children: <Widget>[
         Operation(
           parentColor: placidOrange,
-          function: 'C',
+          function: '',
         ),
         Operation(
           parentColor: otherBlue,
-          function: 'x^y',
+          function: 'x\u1d5e',
         ),
         NumberButton(
           parentColor: Colors.transparent,
@@ -79,7 +88,11 @@ class ColThree extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        IconasButton(),
+        IconasButton(
+          parentColor: placidOrange,
+          parentFunction: 'back',
+          parentIcon: MdiIcons.backspace,
+        ),
         Operation(
           parentColor: otherBlue,
           function: 'x\u00B2',
@@ -135,4 +148,3 @@ class ColFour extends StatelessWidget {
     );
   }
 }
-

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class Compute extends ChangeNotifier {
   String calCur = '0', calHis = '';
@@ -45,6 +46,19 @@ class Compute extends ChangeNotifier {
   void clearPrimary() {
     calCur = '0';
     notifyListeners();
+  }
+
+  void allClear() {
+    calHis = '';
+    notifyListeners();
+  }
+
+  String returnClear() {
+    if(calCur == '0') {
+      return 'AC';
+    }
+    else
+    return 'C';
   }
 
   void transferToHistory() {
@@ -180,6 +194,8 @@ class Compute extends ChangeNotifier {
         return lOprand * rOprand;
       case '/':
         return lOprand / rOprand;
+      case '^':
+        return pow(lOprand, rOprand);
       default:
         return 0.0;
     }
@@ -190,5 +206,21 @@ class Compute extends ChangeNotifier {
     numberStack.clear();
     holder = '';
     opStack = '';
+  }
+
+  void computeSquare() {
+    var squareValue = double.parse(calCur);
+
+    calCur = pow(squareValue, 2).toString();
+    changeCounter();
+    notifyListeners();
+  }
+
+  void computeRoot() {
+    var rootValue = double.parse(calCur);
+
+    calCur = sqrt(rootValue).toString();
+    changeCounter();
+    notifyListeners();
   }
 }

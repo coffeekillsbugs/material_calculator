@@ -3,9 +3,7 @@ import 'dart:math';
 
 class Compute extends ChangeNotifier {
   String calCur = '0', calHis = '';
-  //var twentyFour, twentyFive, twentySix;
   var twentySix;
-  //int flag = 0;
   List<String> post = List();
   String holder = '';
   String opStack = '';
@@ -68,7 +66,7 @@ class Compute extends ChangeNotifier {
   }
 
   void backspace() {
-    if (calCur == '' || calCur.isEmpty)
+    if (calCur == '' || calCur.length == 1)
       calCur = '0';
     else
       calCur = calCur.substring(0, calCur.length - 1);
@@ -80,9 +78,9 @@ class Compute extends ChangeNotifier {
   void pointRunner() {
     String test;
     test = calCur;
-    //TODO calculation for floating point numbers (3.23), which has decimal point
+    //TODO calculation for negative numbers 
     for (int i = 0; i < test.length; i++) {
-      if (re.hasMatch(test[i])) {
+      if (re.hasMatch(test[i]) || test[i] == '.') {
         holder += test[i];
       } else {
         post.add(holder);
@@ -184,18 +182,18 @@ class Compute extends ChangeNotifier {
     notifyListeners();
   }
 
-  double calc(double lOprand, double rOprand, String op) {
+  double calc(double leftOprand, double rightOprand, String op) {
     switch (op) {
       case '+':
-        return lOprand + rOprand;
+        return leftOprand + rightOprand;
       case '-':
-        return lOprand - rOprand;
+        return leftOprand - rightOprand;
       case 'x':
-        return lOprand * rOprand;
+        return leftOprand * rightOprand;
       case '/':
-        return lOprand / rOprand;
+        return leftOprand / rightOprand;
       case '^':
-        return pow(lOprand, rOprand);
+        return pow(leftOprand, rightOprand);
       default:
         return 0.0;
     }
@@ -222,5 +220,17 @@ class Compute extends ChangeNotifier {
     calCur = sqrt(rootValue).toString();
     changeCounter();
     notifyListeners();
+  }
+
+  void noName(var operation) {
+    if(returnCounter() == 0){
+      appendCalCur(operation);
+    }
+    else{
+      transferToHistory();
+      calCur = twentySix + operation;
+      changeCounter();
+      notifyListeners();
+    }
   }
 }

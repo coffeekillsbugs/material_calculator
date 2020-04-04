@@ -44,7 +44,7 @@ class Operation extends StatelessWidget {
 
                 default:
                   Provider.of<Compute>(context, listen: false)
-                      .appendCalCur(function);
+                      .noName(function);
                   break;
               }
             },

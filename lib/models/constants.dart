@@ -53,9 +53,10 @@ class ColTwo extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Operation(
+        IconasButton(
           parentColor: placidOrange,
-          function: '',
+          parentFunction: 'back',
+          parentIcon: MdiIcons.backspace,
         ),
         Operation(
           parentColor: otherBlue,
@@ -88,10 +89,9 @@ class ColThree extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        IconasButton(
-          parentColor: placidOrange,
-          parentFunction: 'back',
-          parentIcon: MdiIcons.backspace,
+        Operation(
+          parentColor: otherBlue,
+          function: '',
         ),
         Operation(
           parentColor: otherBlue,

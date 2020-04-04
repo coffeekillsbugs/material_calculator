@@ -93,29 +93,34 @@ class _CalculatorLayoutState extends State<CalculatorLayout> {
                 ),
               ),
               // * Button layout * //
-              ClipRRect(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30.0),
-                  topRight: Radius.circular(30.0),
-                ),
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.625,
-                  decoration: BoxDecoration(
-                    color: baffllingBlue,
+              Container(
+                height: MediaQuery.of(context).size.height * 0.625,
+                decoration: BoxDecoration(
+                  color: baffllingBlue,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30.0),
+                    topRight: Radius.circular(30.0),
                   ),
-                  child: Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Container(
-                      //color: Colors.white,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          ColOne(),
-                          ColTwo(),
-                          ColThree(),
-                          ColFour(),
-                        ],
-                      ),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black,
+                        spreadRadius: 3.0,
+                        blurRadius: 15.0,
+                        offset: Offset(0.0, 8.0)),
+                  ],
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Container(
+                    //color: Colors.white,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        ColOne(),
+                        ColTwo(),
+                        ColThree(),
+                        ColFour(),
+                      ],
                     ),
                   ),
                 ),

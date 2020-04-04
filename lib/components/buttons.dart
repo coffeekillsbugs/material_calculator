@@ -39,7 +39,7 @@ class Operation extends StatelessWidget {
                 case 'x\u00B2': Provider.of<Compute>(context, listen: false).computeSquare();
                   break;
 
-                case 'x\u207f': Provider.of<Compute>(context, listen: false).appendCalCur('^');
+                case 'x^y': Provider.of<Compute>(context, listen: false).appendCalCur('^');
                   break;
 
                 default:
@@ -177,7 +177,6 @@ class NumberButton extends StatelessWidget {
             splashColor: otherBlue,
             onTap: () {
               var counter = Provider.of<Compute>(context, listen: false);
-//TODO : learn about licenses
               if (counter.returnCounter() == 0) {
                 Provider.of<Compute>(context, listen: false)
                     .appendCalCur(function.toString());

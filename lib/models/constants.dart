@@ -60,7 +60,7 @@ class ColTwo extends StatelessWidget {
         ),
         Operation(
           parentColor: otherBlue,
-          function: 'x\u1d5e',
+          function: 'x^y',
         ),
         NumberButton(
           parentColor: Colors.transparent,

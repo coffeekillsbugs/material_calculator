@@ -12,18 +12,19 @@ class CalculatorLayout extends StatefulWidget {
 class _CalculatorLayoutState extends State<CalculatorLayout> {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        // * Calculator body *//
-        Scaffold(
-          body: Column(
+    return Scaffold(
+      backgroundColor: notSoWhite,
+      body: Stack(
+        children: <Widget>[
+          // * Layer 0 * //
+          Column(
             children: <Widget>[
               // * Display * //
               Container(
                 height: MediaQuery.of(context).size.height * 0.375,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: notSoWhite,
+                  color: Colors.transparent,
                 ),
                 child: Padding(
                   padding: EdgeInsets.only(
@@ -37,7 +38,6 @@ class _CalculatorLayoutState extends State<CalculatorLayout> {
                     reverse: true,
                     children: <Widget>[
                       // *--- Active Display *--- //
-                      //TODO : remedy for .0 display
                       Align(
                         alignment: Alignment.bottomRight,
                         child: Text(
@@ -71,32 +71,59 @@ class _CalculatorLayoutState extends State<CalculatorLayout> {
                   ),
                 ),
               ),
-              // * Button layout * //
+              // * Dummy Button layout * //
               Container(
                 height: MediaQuery.of(context).size.height * 0.625,
+                width: double.infinity,
                 decoration: BoxDecoration(
-                  color: baffllingBlue,
+                  color: Colors.transparent,
                 ),
-                child: Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Container(
-                    //color: Colors.white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        ColOne(),
-                        ColTwo(),
-                        ColThree(),
-                        ColFour(),
-                      ],
+              ),
+            ],
+          ),
+          // * Layer 1 //
+          Column(
+            children: <Widget>[
+              // * Dummy Display * //
+              Container(
+                height: MediaQuery.of(context).size.height * 0.375,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                ),
+              ),
+              // * Button layout * //
+              ClipRRect(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0),
+                ),
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.625,
+                  decoration: BoxDecoration(
+                    color: baffllingBlue,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Container(
+                      //color: Colors.white,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          ColOne(),
+                          ColTwo(),
+                          ColThree(),
+                          ColFour(),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
             ],
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

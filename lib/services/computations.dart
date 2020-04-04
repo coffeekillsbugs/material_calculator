@@ -19,9 +19,10 @@ class Compute extends ChangeNotifier {
   int resultPressCounter = 0;
 
   void changeCounter() {
-    if(resultPressCounter == 0)
-    resultPressCounter = 1;
-    else resultPressCounter = 0;
+    if (resultPressCounter == 0)
+      resultPressCounter = 1;
+    else
+      resultPressCounter = 0;
     notifyListeners();
   }
 
@@ -52,11 +53,10 @@ class Compute extends ChangeNotifier {
   }
 
   String returnClear() {
-    if(calCur == '0') {
+    if (calCur == '0') {
       return 'AC';
-    }
-    else
-    return 'C';
+    } else
+      return 'C';
   }
 
   void transferToHistory() {
@@ -66,10 +66,15 @@ class Compute extends ChangeNotifier {
   }
 
   void backspace() {
-    if (calCur == '' || calCur.length == 1)
-      calCur = '0';
-    else
-      calCur = calCur.substring(0, calCur.length - 1);
+    if (returnCounter() == 0) {
+      if (calCur == '' || calCur.length == 1)
+        calCur = '0';
+      else
+        calCur = calCur.substring(0, calCur.length - 1);
+    } else {
+      calCur = calCur.split('\n')[0];
+      changeCounter();
+    }
 
     notifyListeners();
   }
@@ -78,7 +83,7 @@ class Compute extends ChangeNotifier {
   void pointRunner() {
     String test;
     test = calCur;
-    //TODO calculation for negative numbers 
+    //TODO calculation for negative numbers
     for (int i = 0; i < test.length; i++) {
       if (re.hasMatch(test[i]) || test[i] == '.') {
         holder += test[i];
@@ -177,6 +182,9 @@ class Compute extends ChangeNotifier {
     }
     print(numberStack);
     twentySix = numberStack[0].toString();
+    if (twentySix.split('.')[1] == '0') {
+      twentySix = twentySix.substring(0, twentySix.length - 2);
+    }
     calCur = calCur + '\n=' + twentySix;
     clearVariable();
     notifyListeners();
@@ -207,26 +215,46 @@ class Compute extends ChangeNotifier {
   }
 
   void computeSquare() {
-    var squareValue = double.parse(calCur);
+    var squareValue;
+    if (returnCounter() == 1) {
+      squareValue = double.parse(calCur.split('=')[1]);
+      transferToHistory();
+      changeCounter();
+    } else {
+      squareValue = double.parse(calCur);
+    }
 
     calCur = pow(squareValue, 2).toString();
-    changeCounter();
+    if (calCur.split('.')[1] == '0') {
+      calCur = calCur.substring(0, calCur.length - 2);
+    }
+
     notifyListeners();
   }
 
   void computeRoot() {
-    var rootValue = double.parse(calCur);
+    var rootValue;
+
+    if (returnCounter() == 1) {
+      rootValue = double.parse(calCur.split('=')[1]);
+      transferToHistory();
+      changeCounter();
+    } else {
+      rootValue = double.parse(calCur);
+    }
 
     calCur = sqrt(rootValue).toString();
-    changeCounter();
+    if (calCur.split('.')[1] == '0') {
+      calCur = calCur.substring(0, calCur.length - 2);
+    }
+
     notifyListeners();
   }
 
   void noName(var operation) {
-    if(returnCounter() == 0){
+    if (returnCounter() == 0) {
       appendCalCur(operation);
-    }
-    else{
+    } else {
       transferToHistory();
       calCur = twentySix + operation;
       changeCounter();

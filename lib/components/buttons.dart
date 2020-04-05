@@ -20,33 +20,56 @@ class Operation extends StatelessWidget {
       height: MediaQuery.of(context).size.width * 0.22 * 0.6875,
       decoration: BoxDecoration(
         color: parentColor,
-        borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
+        borderRadius: BorderRadius.circular(
+            MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
       ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
           splashColor: otherBlue,
-          borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
+          borderRadius: BorderRadius.circular(
+              MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
           onTap: () {
-            
             switch (function) {
               case 'C':
+                if (Provider.of<Compute>(context, listen: false)
+                        .returnCounter() ==
+                    1) {
+                  Provider.of<Compute>(context, listen: false).transferToHistory();
+                  Provider.of<Compute>(context, listen: false).changeCounter();
+                }
+                else
                 Provider.of<Compute>(context, listen: false).clearPrimary();
+
                 break;
 
               case 'AC':
                 Provider.of<Compute>(context, listen: false).allClear();
                 break;
 
-              case 'x\u00B2': Provider.of<Compute>(context, listen: false).computeSquare();
+              case 'x\u00B2':
+                Provider.of<Compute>(context, listen: false).computeSquare();
                 break;
 
-              case 'x^y': Provider.of<Compute>(context, listen: false).appendCalCur('^');
+              case 'x^y':if(Provider.of<Compute>(context, listen: false).returnCounter() == 1){
+                Provider.of<Compute>(context, listen:false).powerToYou();
+                Provider.of<Compute>(context, listen:false).changeCounter();
+              } else
+                Provider.of<Compute>(context, listen: false).appendCalCur('^');
+                break;
+
+              case '.':
+                if (Provider.of<Compute>(context, listen: false)
+                        .pointStatus() ==
+                    false) {
+                  Provider.of<Compute>(context, listen: false)
+                      .appendCalCur(function);
+                  Provider.of<Compute>(context, listen: false).setPointStatus();
+                }
                 break;
 
               default:
-                Provider.of<Compute>(context, listen: false)
-                    .noName(function);
+                Provider.of<Compute>(context, listen: false).noName(function);
                 break;
             }
           },
@@ -80,14 +103,16 @@ class IconasButton extends StatelessWidget {
       width: MediaQuery.of(context).size.width *
           0.22, // 16:11 ratio for width to height (80.0/55.0)
       height: MediaQuery.of(context).size.width * 0.22 * 0.6875,
-       decoration: BoxDecoration(
+      decoration: BoxDecoration(
         color: parentColor,
-        borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
+        borderRadius: BorderRadius.circular(
+            MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
       ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
+          borderRadius: BorderRadius.circular(
+              MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
           splashColor: otherBlue,
           onTap: () {
             if (parentFunction == 'back')
@@ -117,19 +142,22 @@ class ResultButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var devicewidth = MediaQuery.of(context).size.width;
-    var resultHeight = (devicewidth * 0.22 * 0.6875 * 2) + (devicewidth * 0.027);
+    var resultHeight =
+        (devicewidth * 0.22 * 0.6875 * 2) + (devicewidth * 0.027);
     return Container(
       width: MediaQuery.of(context).size.width *
           0.22, // 2:3 ratio for width to height (80.0/120.0)
       height: resultHeight,
-       decoration: BoxDecoration(
+      decoration: BoxDecoration(
         color: parentColor,
-        borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
+        borderRadius: BorderRadius.circular(
+            MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
       ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
+          borderRadius: BorderRadius.circular(
+              MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
           splashColor: otherBlue,
           onTap: () {
             print('Result button pressed');
@@ -173,17 +201,22 @@ class NumberButton extends StatelessWidget {
       width: MediaQuery.of(context).size.width *
           0.22, // 16:11 ratio for width to height (80.0/55.0)
       height: MediaQuery.of(context).size.width * 0.22 * 0.6875,
-       decoration: BoxDecoration(
+      decoration: BoxDecoration(
         color: parentColor,
-        borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
+        borderRadius: BorderRadius.circular(
+            MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
       ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
+          borderRadius: BorderRadius.circular(
+              MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
           splashColor: otherBlue,
           onTap: () {
             var counter = Provider.of<Compute>(context, listen: false);
+            if (counter.pointStatus() == true) {
+              counter.setPointStatus();
+            }
             if (counter.returnCounter() == 0) {
               Provider.of<Compute>(context, listen: false)
                   .appendCalCur(function.toString());

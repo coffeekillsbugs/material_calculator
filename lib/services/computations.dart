@@ -7,14 +7,18 @@ class Compute extends ChangeNotifier {
   List<String> post = List();
   String holder = '';
   String opStack = '';
+  bool point = false;
+
+  int errorCode = 0;
 
   int top = -1;
 
   List<String> numberStack = List();
   double rightOprand, leftOprand;
-  double result;
+  var result;
 
   RegExp re = RegExp(r'^[0-9]+$');
+  RegExp re2 = RegExp(r'[a-zA-Z]');
 
   int resultPressCounter = 0;
 
@@ -27,6 +31,12 @@ class Compute extends ChangeNotifier {
   }
 
   int returnCounter() => resultPressCounter;
+
+  bool pointStatus() => point;
+
+  void setPointStatus() {
+    point = !point;
+  }
 
   void appendCalCur(var data) {
     if (calCur == '0') {
@@ -88,12 +98,14 @@ class Compute extends ChangeNotifier {
       if (re.hasMatch(test[i]) || test[i] == '.') {
         holder += test[i];
       } else {
-        post.add(holder);
+        if (holder.isNotEmpty) {
+          post.add(holder);
+        }
         holder = '';
         stackCheck(test[i]);
       }
     }
-    post.add(holder);
+    if (holder != '') post.add(holder);
     if (opStack.isNotEmpty) {
       while (top != -1) {
         post.add(opStack[top]);
@@ -151,6 +163,7 @@ class Compute extends ChangeNotifier {
     }
   }
 
+//TODO : Fix that rogue 0 in calHis
   // *---Shunting Yard Algorithm END---* //
 
   void rpnEvaluator() {
@@ -159,38 +172,59 @@ class Compute extends ChangeNotifier {
       if (re.hasMatch(post[i][0])) {
         numberStack.add(post[i]);
         //print(numberStack);
-      } else {
-        if (numberStack.isNotEmpty) {
-          top = numberStack.length - 1;
-          rightOprand = double.parse(numberStack[top]);
-          leftOprand = double.parse(numberStack[top - 1]);
-          result = calc(leftOprand, rightOprand, post[i]);
-
-          //numberStack = numberStack.substring(0,numberStack.length - 2);
-          numberStack.removeLast();
-          //print(numberStack);
-          numberStack.removeLast();
-          //print(numberStack);
-          numberStack.add(result.toString());
-          //print('Number Stack after opration : ' + numberStack);
-          //top = numberStack.length - 1;
-        } else {
-          //print('String Empty, something has gone wrong');
+      } else if (numberStack.isNotEmpty && numberStack.length != 1) {
+        top = numberStack.length - 1;
+        rightOprand = double.parse(numberStack[top]);
+        // if (rightOprand == 0) {
+        //   errorCode = 2;
+        //   break;
+        // }
+        leftOprand = double.parse(numberStack[top - 1]);
+        result = calc(leftOprand, rightOprand, post[i]);
+        if (result == false) {
+          errorCode = 2;
+          break;
         }
+
+        //numberStack = numberStack.substring(0,numberStack.length - 2);
+        numberStack.removeLast();
+        //print(numberStack);
+        numberStack.removeLast();
+        //print(numberStack);
+        numberStack.add(result.toString());
+        //print('Number Stack after opration : ' + numberStack);
+        //top = numberStack.length - 1;
+      } else {
+        print('numberStack is empty');
+        errorCode = 1;
       }
+
       //print('End of $i.');
     }
-    print(numberStack);
-    twentySix = numberStack[0].toString();
-    if (twentySix.split('.')[1] == '0') {
-      twentySix = twentySix.substring(0, twentySix.length - 2);
+    if (errorCode == 0) {
+      print(numberStack);
+      twentySix = numberStack[0].toString();
+      print(twentySix);
+      if (twentySix.split('.')[1] == '0') {
+        print('inside if');
+        twentySix = twentySix.substring(0, twentySix.length - 2);
+      }
+      calCur = calCur + '\n=' + twentySix;
+    } else if (errorCode == 2) {
+      calCur = calCur + '\n=' + 'Cannot divide by zero';
+      twentySix = '';
+      errorCode = 0;
+    } else {
+      calCur = calCur + '\n=' + 'Error';
+      twentySix = '';
+      errorCode = 0;
     }
-    calCur = calCur + '\n=' + twentySix;
     clearVariable();
     notifyListeners();
+    print('end of rpn');
   }
 
-  double calc(double leftOprand, double rightOprand, String op) {
+  dynamic calc(double leftOprand, double rightOprand, String op) {
     switch (op) {
       case '+':
         return leftOprand + rightOprand;
@@ -199,7 +233,12 @@ class Compute extends ChangeNotifier {
       case 'x':
         return leftOprand * rightOprand;
       case '/':
-        return leftOprand / rightOprand;
+        if (rightOprand != 0)
+          return leftOprand / rightOprand;
+        else
+          return false;
+
+        break;
       case '^':
         return pow(leftOprand, rightOprand);
       default:
@@ -216,7 +255,13 @@ class Compute extends ChangeNotifier {
 
   void computeSquare() {
     var squareValue;
-    if (returnCounter() == 1) {
+    
+    if (re2.hasMatch(calCur)) {
+      transferToHistory();
+      calCur = 'Error';
+    }
+    else {
+      if (returnCounter() == 1) {
       squareValue = double.parse(calCur.split('=')[1]);
       transferToHistory();
       changeCounter();
@@ -228,6 +273,7 @@ class Compute extends ChangeNotifier {
     if (calCur.split('.')[1] == '0') {
       calCur = calCur.substring(0, calCur.length - 2);
     }
+    }
 
     notifyListeners();
   }
@@ -235,17 +281,22 @@ class Compute extends ChangeNotifier {
   void computeRoot() {
     var rootValue;
 
-    if (returnCounter() == 1) {
-      rootValue = double.parse(calCur.split('=')[1]);
+    if (re2.hasMatch(calCur)) {
       transferToHistory();
-      changeCounter();
+      calCur = 'Error';
     } else {
-      rootValue = double.parse(calCur);
-    }
+      if (returnCounter() == 1) {
+        rootValue = double.parse(calCur.split('=')[1]);
+        transferToHistory();
+        changeCounter();
+      } else {
+        rootValue = double.parse(calCur);
+      }
 
-    calCur = sqrt(rootValue).toString();
-    if (calCur.split('.')[1] == '0') {
-      calCur = calCur.substring(0, calCur.length - 2);
+      calCur = sqrt(rootValue).toString();
+      if (calCur.split('.')[1] == '0') {
+        calCur = calCur.substring(0, calCur.length - 2);
+      }
     }
 
     notifyListeners();
@@ -260,5 +311,11 @@ class Compute extends ChangeNotifier {
       changeCounter();
       notifyListeners();
     }
+  }
+
+  void powerToYou() {
+    transferToHistory();
+    calCur = twentySix + '^';
+    notifyListeners();
   }
 }

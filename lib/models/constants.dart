@@ -38,7 +38,7 @@ class ColOne extends StatelessWidget {
           function: 1,
         ),
         Operation(
-          parentColor: baffllingBlue,
+          parentColor: Colors.transparent,
           //function: 'e',
           function: '',
         ),

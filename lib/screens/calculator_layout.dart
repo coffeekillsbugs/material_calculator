@@ -7,11 +7,9 @@ import 'package:provider/provider.dart';
 class CalculatorLayout extends StatefulWidget {
   @override
   _CalculatorLayoutState createState() => _CalculatorLayoutState();
-  
 }
 
 class _CalculatorLayoutState extends State<CalculatorLayout> {
-  
   @override
   Widget build(BuildContext context) {
     print(MediaQuery.of(context).textScaleFactor);
@@ -22,7 +20,8 @@ class _CalculatorLayoutState extends State<CalculatorLayout> {
           // * Layer 0 * //
           // *- Display -* //
           Padding(
-            padding: EdgeInsets.only(bottom:  MediaQuery.of(context).size.height * 0.625),
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).size.height * 0.625),
             child: Container(
               height: MediaQuery.of(context).size.height * 0.375,
               width: double.infinity,
@@ -49,7 +48,8 @@ class _CalculatorLayoutState extends State<CalculatorLayout> {
                         overflow: TextOverflow.fade,
                         style: TextStyle(
                           color: baffllingBlue,
-                          fontSize: 38.7 / MediaQuery.of(context).textScaleFactor, 
+                          fontSize:
+                              38.7 / MediaQuery.of(context).textScaleFactor,
                           fontFamily: 'Righteous',
                         ),
                       ),
@@ -62,7 +62,8 @@ class _CalculatorLayoutState extends State<CalculatorLayout> {
                         textAlign: TextAlign.right,
                         style: TextStyle(
                           color: baffllingBlue.withOpacity(0.6),
-                          fontSize: 25.8 / MediaQuery.of(context).textScaleFactor,
+                          fontSize:
+                              25.8 / MediaQuery.of(context).textScaleFactor,
                           fontFamily: 'Righteous',
                         ),
                       ),
@@ -75,14 +76,17 @@ class _CalculatorLayoutState extends State<CalculatorLayout> {
           // * Layer 1 //
           // *- Keypad -* //
           Padding(
-            padding: EdgeInsets.only(top:  MediaQuery.of(context).size.height * 0.375),
+            padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * 0.375),
             child: Container(
               height: MediaQuery.of(context).size.height * 0.625,
               decoration: BoxDecoration(
-                color: baffllingBlue,
+                //color: baffllingBlue,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
-                  topRight: Radius.circular(MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
+                  topLeft: Radius.circular(
+                      MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
+                  topRight: Radius.circular(
+                      MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
                 ),
                 boxShadow: [
                   BoxShadow(
@@ -91,9 +95,15 @@ class _CalculatorLayoutState extends State<CalculatorLayout> {
                       blurRadius: 15.0,
                       offset: Offset(0.0, 8.0)),
                 ],
+                gradient: RadialGradient(
+                  colors: [baffllingBlue, otherBlue],
+                  center: Alignment.topRight,
+                  radius: 1.6,
+                ),
               ),
               child: Padding(
-                padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.027),
+                padding:
+                    EdgeInsets.all(MediaQuery.of(context).size.width * 0.027),
                 child: Container(
                   //color: Colors.white,
                   child: Row(

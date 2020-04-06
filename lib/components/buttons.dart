@@ -22,6 +22,14 @@ class Operation extends StatelessWidget {
         color: parentColor,
         borderRadius: BorderRadius.circular(
             MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
+        boxShadow: function == '' ? null : [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.5),
+            offset: Offset(0.0, 0.0),
+            spreadRadius: 0.5,
+            blurRadius: 10.0,
+          )
+        ],
       ),
       child: Material(
         color: Colors.transparent,
@@ -107,6 +115,14 @@ class IconasButton extends StatelessWidget {
         color: parentColor,
         borderRadius: BorderRadius.circular(
             MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
+            boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.5),
+            offset: Offset(0.0, 0.0),
+            spreadRadius: 0.5,
+            blurRadius: 10.0,
+          )
+        ],
       ),
       child: Material(
         color: Colors.transparent,
@@ -152,6 +168,14 @@ class ResultButton extends StatelessWidget {
         color: parentColor,
         borderRadius: BorderRadius.circular(
             MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
+            boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.5),
+            offset: Offset(0.0, 0.0),
+            spreadRadius: 0.5,
+            blurRadius: 10.0,
+          )
+        ],
       ),
       child: Material(
         color: Colors.transparent,
@@ -211,6 +235,7 @@ class NumberButton extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(
               MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
+              
           splashColor: otherBlue,
           onTap: () {
             var counter = Provider.of<Compute>(context, listen: false);

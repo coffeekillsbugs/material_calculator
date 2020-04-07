@@ -24,10 +24,10 @@ class Operation extends StatelessWidget {
             MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
         boxShadow: function == '' ? null : [
           BoxShadow(
-            color: Colors.black.withOpacity(0.5),
-            offset: Offset(0.0, 0.0),
+            color: Colors.black.withOpacity(0.3),
+            offset: Offset(0.0, 5.0),
             spreadRadius: 0.5,
-            blurRadius: 10.0,
+            blurRadius: 3.0,
           )
         ],
       ),
@@ -117,10 +117,10 @@ class IconasButton extends StatelessWidget {
             MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
             boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.5),
-            offset: Offset(0.0, 0.0),
+            color: Colors.black.withOpacity(0.3),
+            offset: Offset(0.0, 5.0),
             spreadRadius: 0.5,
-            blurRadius: 10.0,
+            blurRadius: 3.0,
           )
         ],
       ),
@@ -170,10 +170,10 @@ class ResultButton extends StatelessWidget {
             MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
             boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.5),
-            offset: Offset(0.0, 0.0),
+            color: Colors.black.withOpacity(0.3),
+            offset: Offset(0.0, 5.0),
             spreadRadius: 0.5,
-            blurRadius: 10.0,
+            blurRadius: 3.0,
           )
         ],
       ),

@@ -1,6 +1,5 @@
-# Calculator [![Codemagic build status](https://api.codemagic.io/apps/5e5a1164e389930008c1dfd1/5e5a1164e389930008c1dfd0/status_badge.svg)](https://codemagic.io/apps/5e5a1164e389930008c1dfd1/5e5a1164e389930008c1dfd0/latest_build) [![platform](https://img.shields.io/badge/platform-android%20%7C%20ios-blue)]() [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+# Calculator [![platform](https://img.shields.io/badge/platform-android%20%7C%20ios-blue)]() [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-Simple calculator build with material design guidelines.
 
 ## Built With
 

@@ -88,13 +88,13 @@ class _CalculatorLayoutState extends State<CalculatorLayout> {
                   topRight: Radius.circular(
                       MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
                 ),
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.black,
-                      spreadRadius: 3.0,
-                      blurRadius: 15.0,
-                      offset: Offset(0.0, 8.0)),
-                ],
+                // boxShadow: [
+                //   BoxShadow(
+                //       color: Colors.black,
+                //       spreadRadius: 3.0,
+                //       blurRadius: 15.0,
+                //       offset: Offset(0.0, 8.0)),
+                // ],
                 gradient: RadialGradient(
                   colors: [baffllingBlue, otherBlue],
                   center: Alignment.topRight,

@@ -91,7 +91,7 @@ class ColThree extends StatelessWidget {
       children: <Widget>[
         Operation(
           parentColor: otherBlue,
-          function: '',
+          function: '%',
         ),
         Operation(
           parentColor: otherBlue,

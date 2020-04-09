@@ -163,7 +163,6 @@ class Compute extends ChangeNotifier {
     }
   }
 
-//TODO : Fix that rogue 0 in calHis
   // *---Shunting Yard Algorithm END---* //
 
   void rpnEvaluator() {

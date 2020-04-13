@@ -62,6 +62,9 @@ flutter:
       - family: Righteous
         fonts:
           - asset: assets/fonts/Righteous-Regular.ttf
+      - family: Montserrat
+        fonts:
+          - asset: assets/fonts/Montserrat-Light.ttf
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

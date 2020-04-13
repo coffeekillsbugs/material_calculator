@@ -91,11 +91,6 @@ class OperationController extends ChangeNotifier {
   }
 
   void backspace() {
-    // if(_evalDone == true && _errorCode == 0) {
-    //   updateCalCur(returnCalCur().split('=')[0]);
-    // } else if(_evalDone == true && _errorCode > 0) {
-    //   updateCalCur(returnCalCur().split('=')[0]);
-    // }
     if (returnCalCur().length == 1) {
       updateCalCur('0');
     } else if (_evalDone == false) {
@@ -110,7 +105,7 @@ class OperationController extends ChangeNotifier {
     var _temp;
     //TODO : '=' (Evaluate) function
     //TODO : Optimize next two calls
-    pointRunner(returnCalCur());
+    _temp = pointRunner(returnCalCur());
     _twentySix = rpnEvaluator(_temp);
   }
   //* Evaluate function [END] *//----------------------#
@@ -133,9 +128,8 @@ class OperationController extends ChangeNotifier {
           post.add(holder);
         }
         holder = '';
-        //stackCheck(test[i]);
         //*stack Check code
-        if (opStack.isEmpty) {
+        if (opStack.isEmpty || test[i] == '(') {
           opStack += test[i];
           top = opStack.length - 1;
         } else {
@@ -143,7 +137,7 @@ class OperationController extends ChangeNotifier {
             opStack += test[i];
             top = opStack.length - 1;
           } else {
-            while (opStack.length >= 1) {
+            while (opStack.isNotEmpty) {
               //print('top:' + opStack[top]);
               post.add(opStack[top]);
               //print('ppost:' + post);
@@ -212,7 +206,7 @@ class OperationController extends ChangeNotifier {
       if (_digit.hasMatch(data[i][0])) {
         numberStack.add(data[i]);
         //print(numberStack);
-      } else if (numberStack.isNotEmpty && numberStack.length != 1) {
+      } else if (numberStack.length > 1) {
         top = numberStack.length - 1;
         rightOprand = double.parse(numberStack[top]);
         // if (rightOprand == 0) {

@@ -14,15 +14,20 @@ class Operation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var cir = MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5;
     return Container(
       width: MediaQuery.of(context).size.width *
           0.22, // 16:11 ratio for width to height (80.0/55.0)
       height: MediaQuery.of(context).size.width * 0.22 * 0.6875,
       decoration: BoxDecoration(
         color: parentColor,
-        borderRadius: BorderRadius.circular(
-            MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
-        boxShadow: function == '' ? null : [
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(cir),
+          topRight: Radius.circular(cir),
+          bottomRight: Radius.circular(cir),
+          bottomLeft: Radius.circular(10.0),
+        ),
+        boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.3),
             offset: Offset(0.0, 5.0),
@@ -35,19 +40,23 @@ class Operation extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           splashColor: otherBlue,
-          borderRadius: BorderRadius.circular(
-              MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(cir),
+            topRight: Radius.circular(cir),
+            bottomRight: Radius.circular(cir),
+            bottomLeft: Radius.circular(10.0),
+          ),
           onTap: () {
             switch (function) {
               case 'C':
                 if (Provider.of<Compute>(context, listen: false)
                         .returnCounter() ==
                     1) {
-                  Provider.of<Compute>(context, listen: false).transferToHistory();
+                  Provider.of<Compute>(context, listen: false)
+                      .transferToHistory();
                   Provider.of<Compute>(context, listen: false).changeCounter();
-                }
-                else
-                Provider.of<Compute>(context, listen: false).clearPrimary();
+                } else
+                  Provider.of<Compute>(context, listen: false).clearPrimary();
 
                 break;
 
@@ -59,11 +68,15 @@ class Operation extends StatelessWidget {
                 Provider.of<Compute>(context, listen: false).computeSquare();
                 break;
 
-              case 'x^y':if(Provider.of<Compute>(context, listen: false).returnCounter() == 1){
-                Provider.of<Compute>(context, listen:false).powerToYou();
-                Provider.of<Compute>(context, listen:false).changeCounter();
-              } else
-                Provider.of<Compute>(context, listen: false).appendCalCur('^');
+              case 'x^y':
+                if (Provider.of<Compute>(context, listen: false)
+                        .returnCounter() ==
+                    1) {
+                  Provider.of<Compute>(context, listen: false).powerToYou();
+                  Provider.of<Compute>(context, listen: false).changeCounter();
+                } else
+                  Provider.of<Compute>(context, listen: false)
+                      .appendCalCur('^');
                 break;
 
               case '.':
@@ -115,7 +128,7 @@ class IconasButton extends StatelessWidget {
         color: parentColor,
         borderRadius: BorderRadius.circular(
             MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
-            boxShadow: [
+        boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.3),
             offset: Offset(0.0, 5.0),
@@ -168,7 +181,7 @@ class ResultButton extends StatelessWidget {
         color: parentColor,
         borderRadius: BorderRadius.circular(
             MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
-            boxShadow: [
+        boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.3),
             offset: Offset(0.0, 5.0),
@@ -235,7 +248,6 @@ class NumberButton extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(
               MediaQuery.of(context).size.width * 0.22 * 0.6875 * 0.5),
-              
           splashColor: otherBlue,
           onTap: () {
             var counter = Provider.of<Compute>(context, listen: false);

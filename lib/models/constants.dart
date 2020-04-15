@@ -1,14 +1,8 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:material_calculator/services/computations.dart';
-import 'package:material_calculator/theme/colors.dart';
-import 'package:material_calculator/components/buttons.dart';
+import 'package:material_calculator/components/tap_me_not.dart';
+import 'package:material_calculator/services/operation.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
-
-List<FontFeature> powerY = [FontFeature.enable('sups')];
-List<FontFeature> square = [FontFeature.enable('sups')];
 
 class ColOne extends StatelessWidget {
   @override
@@ -16,32 +10,22 @@ class ColOne extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Operation(
-          parentColor: placidOrange,
-          function: Provider.of<Compute>(context, listen: false).returnClear(),
+        ACDC(
+          function: Provider.of<OperationController>(context, listen: false).returnClear(),
         ),
-        IconasButton(
-          parentColor: otherBlue,
-          parentFunction: 'x/x',
-          parentIcon: MdiIcons.squareRoot,
+        EyeCorn(
+          thisIcon: myIcons[0],
         ),
-        NumberButton(
-          parentColor: Colors.transparent,
-          function: 7,
+        NumberPlumber(
+          function: '7',
         ),
-        NumberButton(
-          parentColor: Colors.transparent,
-          function: 4,
+        NumberPlumber(
+          function: '4',
         ),
-        NumberButton(
-          parentColor: Colors.transparent,
-          function: 1,
+        NumberPlumber(
+          function: '1',
         ),
-        Operation(
-          parentColor: Colors.transparent,
-          //function: 'e',
-          function: '',
-        ),
+        Gotcha(),
       ],
     );
   }
@@ -53,30 +37,23 @@ class ColTwo extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        IconasButton(
-          parentColor: placidOrange,
-          parentFunction: 'back',
-          parentIcon: MdiIcons.backspace,
+        EyeCorn(
+          thisIcon: myIcons[1],
         ),
-        Operation(
-          parentColor: otherBlue,
-          function: 'x^y',
+        EyeCorn(
+          thisIcon: myIcons[2],
         ),
-        NumberButton(
-          parentColor: Colors.transparent,
-          function: 8,
+        NumberPlumber(
+          function: '8',
         ),
-        NumberButton(
-          parentColor: Colors.transparent,
-          function: 5,
+        NumberPlumber(
+          function: '5',
         ),
-        NumberButton(
-          parentColor: Colors.transparent,
-          function: 2,
+        NumberPlumber(
+          function: '2',
         ),
-        NumberButton(
-          parentColor: Colors.transparent,
-          function: 0,
+        NumberPlumber(
+          function: '0',
         ),
       ],
     );
@@ -89,28 +66,22 @@ class ColThree extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Operation(
-          parentColor: otherBlue,
-          function: '%',
+        EyeCorn(
+          thisIcon: myIcons[3],
         ),
-        Operation(
-          parentColor: otherBlue,
-          function: 'x\u00B2',
+        EyeCorn(
+          thisIcon: myIcons[4],
         ),
-        NumberButton(
-          parentColor: Colors.transparent,
-          function: 9,
+        NumberPlumber(
+          function: '9',
         ),
-        NumberButton(
-          parentColor: Colors.transparent,
-          function: 6,
+        NumberPlumber(
+          function: '6',
         ),
-        NumberButton(
-          parentColor: Colors.transparent,
-          function: 3,
+        NumberPlumber(
+          function: '3',
         ),
-        Operation(
-          parentColor: otherBlue,
+        NumberPlumber(
           function: '.',
         ),
       ],
@@ -124,27 +95,33 @@ class ColFour extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Operation(
-          parentColor: otherBlue,
-          function: '/',
+        EyeCorn(
+          thisIcon: myIcons[5],
         ),
-        Operation(
-          parentColor: otherBlue,
-          function: 'x',
+        EyeCorn(
+          thisIcon: myIcons[6],
         ),
-        Operation(
-          parentColor: otherBlue,
-          function: '-',
+        EyeCorn(
+          thisIcon: myIcons[7],
         ),
-        Operation(
-          parentColor: otherBlue,
-          function: '+',
+        EyeCorn(
+          thisIcon: myIcons[8],
         ),
-        ResultButton(
-          parentColor: placidOrange,
-          function: '=',
-        )
+        Gotcha(),
+        Gotcha(),
       ],
     );
   }
 }
+
+const List<IconData> myIcons = [
+  MdiIcons.squareRoot,
+  MdiIcons.swapHorizontal,
+  MdiIcons.exponent,
+  MdiIcons.percent,
+  MdiIcons.formatSuperscript,
+  MdiIcons.division,
+  MdiIcons.multiplication,
+  MdiIcons.plus,
+  MdiIcons.minus,
+];

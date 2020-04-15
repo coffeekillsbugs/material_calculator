@@ -6,7 +6,7 @@ class OperationController extends ChangeNotifier {
 
   final RegExp _operator = RegExp(r'[/x+-]');
   final RegExp _digit = RegExp(r'[0-9]');
-  final RegExp _alpha = RegExp(r'[a-zA-Z]');
+  //final RegExp _alpha = RegExp(r'[a-zA-Z]');
 
   bool _evalDone = false;
   int _errorCode = 0;
@@ -22,7 +22,10 @@ class OperationController extends ChangeNotifier {
   }
 
   void appendCalCur(String data) {
-    _calCur += data;
+    if (_calCur == '0')
+      _calCur = data;
+    else
+      _calCur += data;
     notifyListeners();
   }
 
@@ -167,7 +170,6 @@ class OperationController extends ChangeNotifier {
   }
 
   int precedence(String pre) {
-
     //TODO : add for '(' & ')'
     switch (pre) {
       case '^':
@@ -192,7 +194,6 @@ class OperationController extends ChangeNotifier {
 
   //* [START] RPN Evaluator
   String rpnEvaluator(List<String> data) {
-
     List<String> numberStack = List();
 
     int top = -1;

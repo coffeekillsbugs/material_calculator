@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:material_calculator/screens/calculator_layout.dart';
 import 'package:material_calculator/screens/other_layout.dart';
-import 'package:material_calculator/services/computations.dart';
+import 'package:material_calculator/services/operation.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -26,8 +25,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: OtherLayout(),
-      //ChangeNotifierProvider(create: (context) => Compute(),child: CalculatorLayout()),
+      home: ChangeNotifierProvider(create: (context) => OperationController(),child: OtherLayout()),
     );
   }
 }

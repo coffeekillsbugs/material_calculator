@@ -97,15 +97,19 @@ class ColFour extends StatelessWidget {
       children: <Widget>[
         EyeCorn(
           thisIcon: myIcons[5],
+          function: '/'
         ),
         EyeCorn(
           thisIcon: myIcons[6],
+          function: 'x',
         ),
         EyeCorn(
           thisIcon: myIcons[7],
+          function: '+',
         ),
         EyeCorn(
           thisIcon: myIcons[8],
+          function: '-',
         ),
         Gotcha(),
         Gotcha(),
@@ -121,7 +125,7 @@ const List<IconData> myIcons = [
   MdiIcons.percent,
   MdiIcons.formatSuperscript,
   MdiIcons.division,
-  MdiIcons.multiplication,
+  MdiIcons.close,
   MdiIcons.plus,
   MdiIcons.minus,
 ];

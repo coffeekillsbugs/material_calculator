@@ -65,7 +65,7 @@ class OperationController extends ChangeNotifier {
   }
 
   void operatoR(String data) {
-    if (_evalDone == false) {
+    if (_evalDone == false && returnCalCur() != '0') {
       appendCalCur(data);
     } else {
       transferToHistory();

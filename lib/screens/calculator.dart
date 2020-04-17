@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:material_calculator/components/tap_me_not.dart';
 import 'package:material_calculator/models/constants.dart';
 import 'package:material_calculator/services/operation.dart';
 import 'package:material_calculator/theme/colors.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
-class OtherLayout extends StatefulWidget {
+class Calculator extends StatefulWidget {
   @override
-  _OtherLayoutState createState() => _OtherLayoutState();
+  _CalculatorState createState() => _CalculatorState();
 
   // ScrollController _contra = ScrollController(
   //   initialScrollOffset: 1.0,
@@ -15,7 +16,7 @@ class OtherLayout extends StatefulWidget {
   // );
 }
 
-class _OtherLayoutState extends State<OtherLayout> {
+class _CalculatorState extends State<Calculator> {
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -49,7 +50,8 @@ class _OtherLayoutState extends State<OtherLayout> {
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                        Provider.of<OperationController>(context).returnCalCur(),
+                        Provider.of<OperationController>(context)
+                            .returnCalCur(),
                         style: TextStyle(
                           color: baffllingBlue,
                           fontSize: 40.0,
@@ -64,32 +66,47 @@ class _OtherLayoutState extends State<OtherLayout> {
           ),
           //* ---> History Display <--- *//
           Container(
-              width: double.infinity,
-              height: height * 0.28,
-              decoration: BoxDecoration(
-                color: baffllingBlue,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(30.0),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.5),
-                    offset: Offset(0.0, -3.0),
-                    spreadRadius: 5.0,
-                    blurRadius: 8.0,
-                  )
+            width: double.infinity,
+            height: height * 0.28,
+            decoration: BoxDecoration(
+              color: baffllingBlue,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(30.0),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.5),
+                  offset: Offset(0.0, -3.0),
+                  spreadRadius: 5.0,
+                  blurRadius: 8.0,
+                )
+              ],
+            ),
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top + 10.0,
+                bottom: 10.0,
+                left: 10.0,
+                right: 10.0,
+              ),
+              child: ListView(
+                reverse: true,
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Text(
+                      Provider.of<OperationController>(context).returnCalHis(),
+                      style: TextStyle(
+                        color: placidOrange,
+                        fontFamily: 'Righteous',
+                        fontSize: 30.0,
+                      ),
+                    ),
+                  ),
                 ],
               ),
-              child: Padding(
-                padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).padding.top + 10.0,
-                  bottom: 10.0,
-                ),
-                child: Text(
-                  Provider.of<OperationController>(context).returnCalHis(),
-                ),
-              ),
-              ),
+            ),
+          ),
           //* ---> Backspace Button <--- *//
           Padding(
             padding:
@@ -106,33 +123,33 @@ class _OtherLayoutState extends State<OtherLayout> {
                     bottomLeft: Radius.circular(10.0),
                   ),
                   boxShadow: [
-                     BoxShadow(
-                    color: Colors.black.withOpacity(0.5),
-                    offset: Offset(3.0, 6.0),
-                    spreadRadius: 5.0,
-                    blurRadius: 8.0,
-                  )
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.5),
+                      offset: Offset(3.0, 6.0),
+                      spreadRadius: 5.0,
+                      blurRadius: 8.0,
+                    )
                   ],
                 ),
                 child: InkWell(
-                  //splashColor: baffllingBlue,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10.0),
-                    bottomLeft: Radius.circular(10.0),
-                  ),
-                  child: Icon(
-                    MdiIcons.backspace,
-                    color: notSoWhite,
-                    size: 20.0,
-                  ),
-                  onTap: () {
-                    Provider.of<OperationController>(context, listen:false).backspace();
-                  }
-                ),
+                    //splashColor: baffllingBlue,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10.0),
+                      bottomLeft: Radius.circular(10.0),
+                    ),
+                    child: Icon(
+                      MdiIcons.backspace,
+                      color: notSoWhite,
+                      size: 20.0,
+                    ),
+                    onTap: () {
+                      Provider.of<OperationController>(context, listen: false)
+                          .backspace();
+                    }),
               ),
             ),
           ),
-           //* ---> Keypad <--- *//
+          //* ---> Keypad <--- *//
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
@@ -159,7 +176,7 @@ class _OtherLayoutState extends State<OtherLayout> {
               ),
               child: Padding(
                 padding:
-                    EdgeInsets.all(MediaQuery.of(context).size.width * 0.027),
+                    EdgeInsets.all(MediaQuery.of(context).size.width * 0.028),
                 child: Container(
                   //color: Colors.white,
                   child: Row(
@@ -173,6 +190,15 @@ class _OtherLayoutState extends State<OtherLayout> {
                   ),
                 ),
               ),
+            ),
+          ),
+          //* ---> Evaluate <--- *//
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding:
+                  EdgeInsets.all(MediaQuery.of(context).size.width * 0.028),
+              child: Evaluate(),
             ),
           ),
         ],

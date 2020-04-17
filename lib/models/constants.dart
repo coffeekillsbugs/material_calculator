@@ -42,6 +42,7 @@ class ColTwo extends StatelessWidget {
         ),
         EyeCorn(
           thisIcon: myIcons[2],
+          function: '^',
         ),
         NumberPlumber(
           function: '8',
@@ -71,6 +72,7 @@ class ColThree extends StatelessWidget {
         ),
         EyeCorn(
           thisIcon: myIcons[4],
+          function: '!',
         ),
         NumberPlumber(
           function: '9',
@@ -123,7 +125,8 @@ const List<IconData> myIcons = [
   MdiIcons.swapHorizontal,
   MdiIcons.exponent,
   MdiIcons.percent,
-  MdiIcons.formatSuperscript,
+  //MdiIcons.formatSuperscript,
+  MdiIcons.exclamation,
   MdiIcons.division,
   MdiIcons.close,
   MdiIcons.plus,

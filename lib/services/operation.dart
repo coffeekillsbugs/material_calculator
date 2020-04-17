@@ -1,28 +1,38 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+import 'package:material_calculator/theme/colors.dart';
+
 class OperationController extends ChangeNotifier {
   String _calCur = '0', _calHis = '', _result = '';
 
-  final RegExp _operator = RegExp(r'[/x+-]');
+  //final RegExp _operator = RegExp(r'[/x+-]');
   final RegExp _digit = RegExp(r'[0-9]');
+  final RegExp _period = RegExp(r'[.]');
+  //TODO .
 
   bool _evalDone = false;
+  bool _point = false;
   int _errorCode = 0;
-  Color _statusColor = Colors.blue;
+  Color _statusColor = Colors.blue, _textColor = baffllingBlue;
   //var _twentySix;
 
   void status() {
-    if (_errorCode == 0 && _evalDone == true) {
+    if (_evalDone == true && _errorCode == 0) {
       _statusColor = Colors.orange;
-    } else if (_errorCode > 0) {
+      _textColor = Colors.deepOrange;
+    } else if (_evalDone == true && _errorCode > 0) {
       _statusColor = Colors.red;
-    } else
+      _textColor = Colors.red[900];
+    } else {
       _statusColor = Colors.blue;
+      _textColor = baffllingBlue;
+    }
     notifyListeners();
   }
 
   Color statusColor() => _statusColor;
+  Color textColor() => _textColor;
 
   String returnCalCur() => _calCur;
   String returnCalHis() => _calHis;
@@ -46,8 +56,7 @@ class OperationController extends ChangeNotifier {
 
   //* [START] _calHis methods *//----------------------#
   void transferToHistory() {
-    if (_errorCode == 0)
-      _calHis = _calHis + '\n' + returnCalCur() + returnResult();
+    _calHis = _calHis + '\n\n' + returnCalCur() + '\n' + returnResult();
     notifyListeners();
   }
 
@@ -63,14 +72,29 @@ class OperationController extends ChangeNotifier {
   }
 
   void calCurController(String data) {
-    //_errorCode = 0;
-
     if (_digit.hasMatch(data)) {
+      print('digit matched');
+      _point = false;
       digit(data);
-    } else if (_operator.hasMatch(data) && returnCalCur() != '0') {
+    } else if ((data == 'x' ||
+            data == '/' ||
+            data == '+' ||
+            data == '-' ||
+            data == '^' ||
+            data == '!') &&
+        returnCalCur() != '0') {
+      print('data is : ' + data);
+      print('operator matched');
       operatoR(data);
-    } else
+    } else if (data == 'C') {
+      print('clear matched');
       clearDisplay(data);
+    } else {
+      if(_point == false) {
+        _point = true;
+        digit(data);
+      }
+    }
   }
 
   void digit(String data) {
@@ -85,6 +109,8 @@ class OperationController extends ChangeNotifier {
       updateCalCur(data);
       updateResult('');
       _evalDone = false;
+      _errorCode = 0;
+      status();
     }
   }
 
@@ -92,11 +118,21 @@ class OperationController extends ChangeNotifier {
     if (_evalDone == false && returnCalCur() != '0') {
       appendCalCur(data);
     } else {
-      if (_errorCode == 0) transferToHistory();
-      updateCalCur(returnResult().split('=')[1]);
-      updateResult('');
-      appendCalCur(data);
-      _evalDone = false;
+      if (_errorCode > 0) {
+        print('in here now and data is : ' + data);
+        updateResult('');
+        updateCalCur('0');
+        _evalDone = false;
+        _errorCode = 0;
+        status();
+      } else {
+        transferToHistory();
+        updateCalCur(returnResult().split('=')[1] + data);
+        updateResult('');
+        _evalDone = false;
+        _errorCode = 0;
+        status();
+      }
     }
   }
 
@@ -105,13 +141,17 @@ class OperationController extends ChangeNotifier {
       updateCalCur('0');
       updateResult('');
     } else if (_evalDone == true && data == 'C') {
-      transferToHistory();
+      if (_errorCode == 0) transferToHistory();
       updateCalCur('0');
       updateResult('');
       _evalDone = false;
+      _errorCode = 0;
+      status();
     } else {
       clearHistory();
       _evalDone = false;
+      _errorCode = 0;
+      status();
     }
   }
 
@@ -129,9 +169,18 @@ class OperationController extends ChangeNotifier {
       updateCalCur(returnCalCur().substring(0, returnCalCur().length - 1));
     } else {
       //updateCalCur(returnCalCur().split('=')[0]);
-      transferToHistory();
-      updateResult('');
-      _evalDone = false;
+      if (_errorCode == 0) {
+        transferToHistory();
+        updateResult('');
+        _evalDone = false;
+        _errorCode = 0;
+        status();
+      } else {
+        updateCalCur('0');
+        _evalDone = false;
+        _errorCode = 0;
+        status();
+      }
     }
   }
 
@@ -196,14 +245,15 @@ class OperationController extends ChangeNotifier {
         --top;
       }
     }
-    //print(post);
+    print(post);
     return post;
-    //rpnEvaluator();
   }
 
   int precedence(String pre) {
     //TODO : add for '(' & ')'
     switch (pre) {
+      case '!':
+        return 5;
       case '^':
         return 4;
       case 'x':
@@ -232,13 +282,37 @@ class OperationController extends ChangeNotifier {
 
     double rightOprand, leftOprand;
     var result;
-    String twentySix = '';
+    var twentySix;
+
+    var factResult;
 
     for (int i = 0; i < data.length; i++) {
-      //print('Start of $i');
+      print('Start of $i');
+      print('Data' + data[i][0]);
       if (_digit.hasMatch(data[i][0])) {
         numberStack.add(data[i]);
-        //print(numberStack);
+        print('NumberStack : ');
+        print(numberStack);
+      } else if (data[i][0] == '!') {
+        print('! approved');
+        if (_period.hasMatch(numberStack[numberStack.length - 1])) {
+          print('. approved');
+          _errorCode = 1;
+          break;
+        } else {
+          print('. skipped');
+          factResult =
+              factorial(int.parse(numberStack[numberStack.length - 1]));
+          print(factResult);
+          print('Numberstack after factResult');
+          print(numberStack);
+          numberStack.removeLast();
+          print('Numberstack after removing last element');
+          print(numberStack);
+          numberStack.add(factResult.toString());
+          print('Numberstack after adding factResult');
+          print(numberStack);
+        }
       } else if (numberStack.length > 1) {
         top = numberStack.length - 1;
         rightOprand = double.parse(numberStack[top]);
@@ -252,7 +326,7 @@ class OperationController extends ChangeNotifier {
           _errorCode = 2;
           break;
         }
-
+        print('This place');
         //numberStack = numberStack.substring(0,numberStack.length - 2);
         numberStack.removeLast();
         //print(numberStack);
@@ -268,20 +342,24 @@ class OperationController extends ChangeNotifier {
 
       //print('End of $i.');
     }
+
     if (_errorCode == 0) {
       //print(numberStack);
-      twentySix = numberStack[0].toString();
-      //print(twentySix);
+      twentySix = double.parse(numberStack[0]);
+      twentySix = twentySix.toString();
+      print('TwentySix : ' + twentySix.toString());
       if (twentySix.split('.')[1] == '0') {
         //print('inside if');
         twentySix = twentySix.substring(0, twentySix.length - 2);
       }
       updateResult('=' + twentySix);
     } else if (_errorCode == 2) {
-      updateCalCur('Can\'t divide by 0');
+      updateCalCur('');
+      updateResult('Can\'t divide by 0');
       //_errorCode = 0;
     } else {
-      updateCalCur('Bad Expression');
+      updateCalCur('');
+      updateResult('Bad Expression');
       //_errorCode = 0;
     }
     //return twentySix;
@@ -309,9 +387,15 @@ class OperationController extends ChangeNotifier {
     }
   }
   //* RPN Evaluator [END]
-  //TODO : square root function
 
-  //TODO : square function
+  double factorial(int data) {
+    var result;
+    if (data == 0 || data == 1) return 1;
+
+    result = factorial(data - 1) * data;
+    return result;
+  }
+  //TODO : square root function
 
   //TODO : power function
 

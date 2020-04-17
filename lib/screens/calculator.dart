@@ -54,7 +54,7 @@ class _CalculatorState extends State<Calculator> {
                         Provider.of<OperationController>(context)
                             .returnResult(),
                         style: TextStyle(
-                          color: baffllingBlue,
+                          color: Provider.of<OperationController>(context).textColor(),
                           fontSize: 40.0,
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w600,
@@ -102,7 +102,7 @@ class _CalculatorState extends State<Calculator> {
             ),
             child: Padding(
               padding: EdgeInsets.only(
-                top: MediaQuery.of(context).padding.top + 10.0,
+                top: MediaQuery.of(context).padding.top,
                 bottom: 10.0,
                 left: 10.0,
                 right: 10.0,
@@ -116,8 +116,9 @@ class _CalculatorState extends State<Calculator> {
                       Provider.of<OperationController>(context).returnCalHis(),
                       textAlign: TextAlign.right,
                       style: TextStyle(
-                        color: placidOrange,
-                        fontFamily: 'Righteous',
+                        color: otherBlue,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w300,
                         fontSize: 30.0,
                       ),
                     ),
@@ -144,7 +145,7 @@ class _CalculatorState extends State<Calculator> {
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.5),
-                      offset: Offset(3.0, 6.0),
+                      offset: Offset(6.0, 6.0),
                       spreadRadius: 5.0,
                       blurRadius: 8.0,
                     )

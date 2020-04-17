@@ -70,9 +70,9 @@ class EyeCorn extends StatelessWidget {
           onTap: () {
             var operation = Provider.of<OperationController>(context, listen: false);
             switch(function){
-              case 'square' : print('Square');
+              case 'facto' : print('this');
                 break;
-              
+            
               default : operation.calCurController(function);
             }
           },

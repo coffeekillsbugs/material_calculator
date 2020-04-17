@@ -34,7 +34,7 @@ class _CalculatorState extends State<Calculator> {
               height: height * 0.095,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [notSoWhite, Colors.lightBlue], //orangeAccent, red
+                  colors: [notSoWhite, Provider.of<OperationController>(context).statusColor()], //orangeAccent, red
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                 ),
@@ -44,9 +44,27 @@ class _CalculatorState extends State<Calculator> {
                 // controller: widget._contra,
                 reverse: true,
                 children: <Widget>[
+                  //TODO Change focus to result after evaluation
                   Padding(
                     padding:
-                        EdgeInsets.only(right: width * 0.2, left: width * 0.05),
+                        EdgeInsets.only(right: width * 0.2),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        Provider.of<OperationController>(context)
+                            .returnResult(),
+                        style: TextStyle(
+                          color: baffllingBlue,
+                          fontSize: 40.0,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsets.only(left: width * 0.05),
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: Text(
@@ -96,6 +114,7 @@ class _CalculatorState extends State<Calculator> {
                     alignment: Alignment.bottomRight,
                     child: Text(
                       Provider.of<OperationController>(context).returnCalHis(),
+                      textAlign: TextAlign.right,
                       style: TextStyle(
                         color: placidOrange,
                         fontFamily: 'Righteous',
@@ -132,20 +151,21 @@ class _CalculatorState extends State<Calculator> {
                   ],
                 ),
                 child: InkWell(
-                    //splashColor: baffllingBlue,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10.0),
-                      bottomLeft: Radius.circular(10.0),
-                    ),
-                    child: Icon(
-                      MdiIcons.backspace,
-                      color: notSoWhite,
-                      size: 20.0,
-                    ),
-                    onTap: () {
-                      Provider.of<OperationController>(context, listen: false)
-                          .backspace();
-                    }),
+                  //splashColor: baffllingBlue,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10.0),
+                    bottomLeft: Radius.circular(10.0),
+                  ),
+                  child: Icon(
+                    MdiIcons.backspace,
+                    color: notSoWhite,
+                    size: 20.0,
+                  ),
+                  onTap: () {
+                    Provider.of<OperationController>(context, listen: false)
+                        .backspace();
+                  },
+                ),
               ),
             ),
           ),

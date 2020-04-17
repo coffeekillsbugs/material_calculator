@@ -2,18 +2,31 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 class OperationController extends ChangeNotifier {
-  String _calCur = '0', _calHis = '';
+  String _calCur = '0', _calHis = '', _result = '';
 
   final RegExp _operator = RegExp(r'[/x+-]');
   final RegExp _digit = RegExp(r'[0-9]');
-  //final RegExp _alpha = RegExp(r'[a-zA-Z]');
 
   bool _evalDone = false;
   int _errorCode = 0;
-  var _twentySix;
+  Color _statusColor = Colors.blue;
+  //var _twentySix;
+
+  void status() {
+    if (_errorCode == 0 && _evalDone == true) {
+      _statusColor = Colors.orange;
+    } else if (_errorCode > 0) {
+      _statusColor = Colors.red;
+    } else
+      _statusColor = Colors.blue;
+    notifyListeners();
+  }
+
+  Color statusColor() => _statusColor;
 
   String returnCalCur() => _calCur;
   String returnCalHis() => _calHis;
+  String returnResult() => _result;
 
   //* [START] _calCur methods *//----------------------#
   void updateCalCur(String data) {
@@ -33,7 +46,8 @@ class OperationController extends ChangeNotifier {
 
   //* [START] _calHis methods *//----------------------#
   void transferToHistory() {
-    if (_errorCode == 0) _calHis = _calHis + '\n' + returnCalCur();
+    if (_errorCode == 0)
+      _calHis = _calHis + '\n' + returnCalCur() + returnResult();
     notifyListeners();
   }
 
@@ -43,7 +57,14 @@ class OperationController extends ChangeNotifier {
   }
   //* _calHis methods [END] *//----------------------#
 
+  void updateResult(String data) {
+    _result = data;
+    notifyListeners();
+  }
+
   void calCurController(String data) {
+    //_errorCode = 0;
+
     if (_digit.hasMatch(data)) {
       digit(data);
     } else if (_operator.hasMatch(data) && returnCalCur() != '0') {
@@ -53,13 +74,16 @@ class OperationController extends ChangeNotifier {
   }
 
   void digit(String data) {
-    if (_evalDone == false && returnCalCur() == '0')
+    if (_evalDone == false && returnCalCur() == '0') {
       updateCalCur(data);
-    else if (_evalDone == false)
+      _errorCode = 0;
+    } else if (_evalDone == false) {
       appendCalCur(data);
-    else {
-      transferToHistory();
+      _errorCode = 0;
+    } else {
+      if (_errorCode == 0) transferToHistory();
       updateCalCur(data);
+      updateResult('');
       _evalDone = false;
     }
   }
@@ -68,22 +92,27 @@ class OperationController extends ChangeNotifier {
     if (_evalDone == false && returnCalCur() != '0') {
       appendCalCur(data);
     } else {
-      transferToHistory();
-      updateCalCur(_twentySix);
+      if (_errorCode == 0) transferToHistory();
+      updateCalCur(returnResult().split('=')[1]);
+      updateResult('');
       appendCalCur(data);
       _evalDone = false;
     }
   }
 
   void clearDisplay(String data) {
-    if (_evalDone == false && data == 'C')
+    if (_evalDone == false && data == 'C') {
       updateCalCur('0');
-    else if (_evalDone == true && data == 'C') {
+      updateResult('');
+    } else if (_evalDone == true && data == 'C') {
       transferToHistory();
       updateCalCur('0');
+      updateResult('');
       _evalDone = false;
-    } else
+    } else {
       clearHistory();
+      _evalDone = false;
+    }
   }
 
   String returnClear() {
@@ -99,17 +128,20 @@ class OperationController extends ChangeNotifier {
     } else if (_evalDone == false) {
       updateCalCur(returnCalCur().substring(0, returnCalCur().length - 1));
     } else {
-      updateCalCur(returnCalCur().split('=')[0]);
+      //updateCalCur(returnCalCur().split('=')[0]);
+      transferToHistory();
+      updateResult('');
+      _evalDone = false;
     }
   }
 
   //* [START] Evaluate function *//----------------------#
   void evaluator() {
     var _temp;
-    //TODO : '=' (Evaluate) function
-    //TODO : Optimize next two calls
     _temp = pointRunner(returnCalCur());
-    _twentySix = rpnEvaluator(_temp);
+    rpnEvaluator(_temp);
+    _evalDone = true;
+    status();
   }
   //* Evaluate function [END] *//----------------------#
 
@@ -193,7 +225,7 @@ class OperationController extends ChangeNotifier {
   //* Shunting Yard Algorithm [END] *//----------------------#
 
   //* [START] RPN Evaluator
-  String rpnEvaluator(List<String> data) {
+  void rpnEvaluator(List<String> data) {
     List<String> numberStack = List();
 
     int top = -1;
@@ -244,15 +276,15 @@ class OperationController extends ChangeNotifier {
         //print('inside if');
         twentySix = twentySix.substring(0, twentySix.length - 2);
       }
-      appendCalCur('\n=' + twentySix);
+      updateResult('=' + twentySix);
     } else if (_errorCode == 2) {
-      appendCalCur('\n=' + 'Cannot divide by zero');
-      _errorCode = 0;
+      updateCalCur('Can\'t divide by 0');
+      //_errorCode = 0;
     } else {
-      appendCalCur('\n=' + 'Error');
-      _errorCode = 0;
+      updateCalCur('Bad Expression');
+      //_errorCode = 0;
     }
-    return twentySix;
+    //return twentySix;
   }
 
   dynamic calc(double leftOprand, double rightOprand, String op) {

@@ -206,7 +206,7 @@ class Evaluate extends StatelessWidget {
             bottomLeft: Radius.circular(cir),
           ),
           onTap: () {
-            //TODO Evaluate
+            Provider.of<OperationController>(context, listen:false).evaluator();
           },
           child: Align(
             alignment: Alignment.center,

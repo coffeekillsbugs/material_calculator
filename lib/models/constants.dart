@@ -15,6 +15,7 @@ class ColOne extends StatelessWidget {
         ),
         EyeCorn(
           thisIcon: myIcons[0],
+          function: 'sqrt',
         ),
         NumberPlumber(
           function: '7',
@@ -69,6 +70,7 @@ class ColThree extends StatelessWidget {
       children: <Widget>[
         EyeCorn(
           thisIcon: myIcons[3],
+          function: '%',
         ),
         EyeCorn(
           thisIcon: myIcons[4],

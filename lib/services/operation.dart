@@ -9,10 +9,9 @@ class OperationController extends ChangeNotifier {
   //final RegExp _operator = RegExp(r'[/x+-]');
   final RegExp _digit = RegExp(r'[0-9]');
   final RegExp _period = RegExp(r'[.]');
-  //TODO .
 
   bool _evalDone = false;
-  bool _point = false;
+  bool _point = false, _root = false;
   int _errorCode = 0;
   Color _statusColor = Colors.blue, _textColor = baffllingBlue;
   //var _twentySix;
@@ -22,8 +21,8 @@ class OperationController extends ChangeNotifier {
       _statusColor = Colors.orange;
       _textColor = Colors.deepOrange;
     } else if (_evalDone == true && _errorCode > 0) {
-      _statusColor = Colors.red;
-      _textColor = Colors.red[900];
+      _statusColor = rustyRed;
+      _textColor = burgundy;
     } else {
       _statusColor = Colors.blue;
       _textColor = baffllingBlue;
@@ -72,8 +71,11 @@ class OperationController extends ChangeNotifier {
   }
 
   void calCurController(String data) {
+
+    _root = false;
+
     if (_digit.hasMatch(data)) {
-      print('digit matched');
+      //print('digit matched');
       _point = false;
       digit(data);
     } else if ((data == 'x' ||
@@ -81,16 +83,19 @@ class OperationController extends ChangeNotifier {
             data == '+' ||
             data == '-' ||
             data == '^' ||
-            data == '!') &&
+            data == '!' ||
+            data == '%') &&
         returnCalCur() != '0') {
-      print('data is : ' + data);
-      print('operator matched');
+      //print('data is : ' + data);
+      //print('operator matched');
       operatoR(data);
-    } else if (data == 'C') {
+    } else if (data == 'C' || data == 'AC') {
       print('clear matched');
       clearDisplay(data);
+    } else if (data == 'sqrt' && _errorCode == 0) {
+      squareRoot();
     } else {
-      if(_point == false) {
+      if (_point == false) {
         _point = true;
         digit(data);
       }
@@ -119,7 +124,7 @@ class OperationController extends ChangeNotifier {
       appendCalCur(data);
     } else {
       if (_errorCode > 0) {
-        print('in here now and data is : ' + data);
+        //print('in here now and data is : ' + data);
         updateResult('');
         updateCalCur('0');
         _evalDone = false;
@@ -167,7 +172,14 @@ class OperationController extends ChangeNotifier {
       updateCalCur('0');
     } else if (_evalDone == false) {
       updateCalCur(returnCalCur().substring(0, returnCalCur().length - 1));
-    } else {
+    } else if (_root == true) {
+      transferToHistory();
+      updateCalCur('0');
+      updateResult('');
+      _evalDone = false;
+      _errorCode = 0;
+      status();
+    }else {
       //updateCalCur(returnCalCur().split('=')[0]);
       if (_errorCode == 0) {
         transferToHistory();
@@ -177,6 +189,7 @@ class OperationController extends ChangeNotifier {
         status();
       } else {
         updateCalCur('0');
+        updateResult('');
         _evalDone = false;
         _errorCode = 0;
         status();
@@ -187,6 +200,8 @@ class OperationController extends ChangeNotifier {
   //* [START] Evaluate function *//----------------------#
   void evaluator() {
     var _temp;
+
+    _point = true;
     _temp = pointRunner(returnCalCur());
     rpnEvaluator(_temp);
     _evalDone = true;
@@ -252,6 +267,8 @@ class OperationController extends ChangeNotifier {
   int precedence(String pre) {
     //TODO : add for '(' & ')'
     switch (pre) {
+      case '%':
+        return 5;
       case '!':
         return 5;
       case '^':
@@ -382,6 +399,10 @@ class OperationController extends ChangeNotifier {
         break;
       case '^':
         return pow(leftOprand, rightOprand);
+
+      case '%':
+        return rightOprand * (leftOprand / 100.0);
+
       default:
         return 0.0;
     }
@@ -395,9 +416,35 @@ class OperationController extends ChangeNotifier {
     result = factorial(data - 1) * data;
     return result;
   }
-  //TODO : square root function
 
-  //TODO : power function
+  void squareRoot() {
+    var res, temp;
 
-  //TODO : percentage function
+    if (returnCalCur() == '' || _evalDone == true) {
+      transferToHistory();
+      if (returnResult()[0] == '=') {
+        
+        temp = returnResult().split('=')[1];
+        res = sqrt(double.parse(returnResult().split('=')[1]));
+      } else {
+        temp = returnResult();
+        res = sqrt(double.parse(returnResult()));
+      }
+    } else {
+      temp = returnCalCur();
+      res = sqrt(double.parse(returnCalCur()));
+    }
+    res = res.toString();
+
+    if (res.split('.')[1] == '0') {
+      res = res.substring(0, res.length - 2);
+    }
+
+    _root = true;
+    updateCalCur('Square root of $temp');
+    updateResult('=$res');
+    _errorCode = 0;
+    _evalDone = true;
+    status();
+  }
 }

@@ -6,7 +6,6 @@ import 'package:material_calculator/theme/colors.dart';
 class OperationController extends ChangeNotifier {
   String _calCur = '0', _calHis = '', _result = '';
 
-  //final RegExp _operator = RegExp(r'[/x+-]');
   final RegExp _digit = RegExp(r'[0-9]');
   final RegExp _period = RegExp(r'[.]');
 
@@ -14,7 +13,6 @@ class OperationController extends ChangeNotifier {
   bool _point = false, _root = false;
   int _errorCode = 0;
   Color _statusColor = Colors.blue, _textColor = baffllingBlue;
-  //var _twentySix;
 
   void status() {
     if (_evalDone == true && _errorCode == 0) {
@@ -75,7 +73,6 @@ class OperationController extends ChangeNotifier {
     _root = false;
 
     if (_digit.hasMatch(data)) {
-      //print('digit matched');
       _point = false;
       digit(data);
     } else if ((data == 'x' ||
@@ -86,8 +83,6 @@ class OperationController extends ChangeNotifier {
             data == '!' ||
             data == '%') &&
         returnCalCur() != '0') {
-      //print('data is : ' + data);
-      //print('operator matched');
       operatoR(data);
     } else if (data == 'C' || data == 'AC') {
       print('clear matched');
@@ -124,7 +119,6 @@ class OperationController extends ChangeNotifier {
       appendCalCur(data);
     } else {
       if (_errorCode > 0) {
-        //print('in here now and data is : ' + data);
         updateResult('');
         updateCalCur('0');
         _evalDone = false;
@@ -180,7 +174,6 @@ class OperationController extends ChangeNotifier {
       _errorCode = 0;
       status();
     }else {
-      //updateCalCur(returnCalCur().split('=')[0]);
       if (_errorCode == 0) {
         transferToHistory();
         updateResult('');
@@ -217,8 +210,6 @@ class OperationController extends ChangeNotifier {
 
     int top = -1;
 
-    //TODO calculation for negative numbers
-
     for (int i = 0; i < test.length; i++) {
       if (_digit.hasMatch(test[i]) || test[i] == '.') {
         holder += test[i];
@@ -237,14 +228,9 @@ class OperationController extends ChangeNotifier {
             top = opStack.length - 1;
           } else {
             while (opStack.isNotEmpty) {
-              //print('top:' + opStack[top]);
               post.add(opStack[top]);
-              //print('ppost:' + post);
               opStack = opStack.substring(0, top);
-              //print('opstack: ' + opStack);
-              //opStack += c;
               top = opStack.length - 1;
-              //stackCheck(c);
             }
             opStack += test[i];
             top = opStack.length - 1;
@@ -333,10 +319,6 @@ class OperationController extends ChangeNotifier {
       } else if (numberStack.length > 1) {
         top = numberStack.length - 1;
         rightOprand = double.parse(numberStack[top]);
-        // if (rightOprand == 0) {
-        //   errorCode = 2;
-        //   break;
-        // }
         leftOprand = double.parse(numberStack[top - 1]);
         result = calc(leftOprand, rightOprand, data[i]);
         if (result == false) {
@@ -344,42 +326,30 @@ class OperationController extends ChangeNotifier {
           break;
         }
         print('This place');
-        //numberStack = numberStack.substring(0,numberStack.length - 2);
         numberStack.removeLast();
-        //print(numberStack);
         numberStack.removeLast();
-        //print(numberStack);
         numberStack.add(result.toString());
-        //print('Number Stack after opration : ' + numberStack);
-        //top = numberStack.length - 1;
       } else {
         print('numberStack is empty');
         _errorCode = 1;
       }
-
-      //print('End of $i.');
     }
 
     if (_errorCode == 0) {
-      //print(numberStack);
       twentySix = double.parse(numberStack[0]);
       twentySix = twentySix.toString();
       print('TwentySix : ' + twentySix.toString());
       if (twentySix.split('.')[1] == '0') {
-        //print('inside if');
         twentySix = twentySix.substring(0, twentySix.length - 2);
       }
       updateResult('=' + twentySix);
     } else if (_errorCode == 2) {
       updateCalCur('');
       updateResult('Can\'t divide by 0');
-      //_errorCode = 0;
     } else {
       updateCalCur('');
       updateResult('Bad Expression');
-      //_errorCode = 0;
     }
-    //return twentySix;
   }
 
   dynamic calc(double leftOprand, double rightOprand, String op) {

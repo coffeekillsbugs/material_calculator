@@ -26,7 +26,10 @@ class ColOne extends StatelessWidget {
         NumberPlumber(
           function: '1',
         ),
-        Gotcha(),
+        EyeCorn(
+          thisIcon: myIcons[9],
+          //function: 'swap',
+        ),
       ],
     );
   }
@@ -40,6 +43,7 @@ class ColTwo extends StatelessWidget {
       children: <Widget>[
         EyeCorn(
           thisIcon: myIcons[1],
+          function: 'back',
         ),
         EyeCorn(
           thisIcon: myIcons[2],
@@ -124,7 +128,7 @@ class ColFour extends StatelessWidget {
 
 const List<IconData> myIcons = [
   MdiIcons.squareRoot,
-  MdiIcons.swapHorizontal,
+  MdiIcons.backspace,
   MdiIcons.exponent,
   MdiIcons.percent,
   //MdiIcons.formatSuperscript,
@@ -133,4 +137,5 @@ const List<IconData> myIcons = [
   MdiIcons.close,
   MdiIcons.plus,
   MdiIcons.minus,
+  MdiIcons.swapHorizontal,
 ];

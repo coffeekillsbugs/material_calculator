@@ -3,12 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:material_calculator/screens/calculator.dart';
 import 'package:material_calculator/services/operation.dart';
 import 'package:provider/provider.dart';
+import 'package:device_preview/device_preview.dart' as dp;
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.dark,
     ),
   );
   runApp(MyApp());

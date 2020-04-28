@@ -3,7 +3,6 @@ import 'package:material_calculator/components/tap_me_not.dart';
 import 'package:material_calculator/models/constants.dart';
 import 'package:material_calculator/services/operation.dart';
 import 'package:material_calculator/theme/colors.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
 class Calculator extends StatefulWidget {
@@ -26,19 +25,27 @@ class _CalculatorState extends State<Calculator> {
       backgroundColor: notSoWhite,
       body: Stack(
         children: <Widget>[
+          Container(
+            height: double.infinity,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              gradient: RadialGradient(
+                colors: [
+                  Provider.of<OperationController>(context).statusColor(),
+                  notSoWhite
+                ],
+                radius: 2.0,
+                center: Alignment.bottomCenter,
+              ),
+            ),
+          ),
           //* ---> Active Display <--- *//
           Padding(
             padding: EdgeInsets.only(top: height * 0.28),
             child: Container(
               width: double.infinity,
               height: height * 0.095,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [notSoWhite, Provider.of<OperationController>(context).statusColor()], //orangeAccent, red
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                ),
-              ),
+              decoration: BoxDecoration(),
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 // controller: widget._contra,
@@ -46,16 +53,16 @@ class _CalculatorState extends State<Calculator> {
                 children: <Widget>[
                   //TODO Change focus to result after evaluation
                   Padding(
-                    padding:
-                        EdgeInsets.only(right: width * 0.2),
+                    padding: EdgeInsets.only(right: 10.0),
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: Text(
                         Provider.of<OperationController>(context)
                             .returnResult(),
                         style: TextStyle(
-                          color: Provider.of<OperationController>(context).textColor(),
-                          fontSize: 40.0,
+                          color: Provider.of<OperationController>(context)
+                              .textColor(),
+                          fontSize: 60.0,
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w600,
                         ),
@@ -63,8 +70,7 @@ class _CalculatorState extends State<Calculator> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.only(left: width * 0.05),
+                    padding: EdgeInsets.only(left: width * 0.05),
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: Text(
@@ -72,7 +78,7 @@ class _CalculatorState extends State<Calculator> {
                             .returnCalCur(),
                         style: TextStyle(
                           color: baffllingBlue,
-                          fontSize: 40.0,
+                          fontSize: 60.0,
                           fontFamily: 'Montserrat',
                         ),
                       ),
@@ -87,18 +93,10 @@ class _CalculatorState extends State<Calculator> {
             width: double.infinity,
             height: height * 0.28,
             decoration: BoxDecoration(
-              color: baffllingBlue,
+              color: Colors.transparent,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(30.0),
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.5),
-                  offset: Offset(0.0, -3.0),
-                  spreadRadius: 5.0,
-                  blurRadius: 8.0,
-                )
-              ],
             ),
             child: Padding(
               padding: EdgeInsets.only(
@@ -119,7 +117,7 @@ class _CalculatorState extends State<Calculator> {
                         color: otherBlue,
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w300,
-                        fontSize: 30.0,
+                        fontSize: 40.0,
                       ),
                     ),
                   ),
@@ -127,54 +125,11 @@ class _CalculatorState extends State<Calculator> {
               ),
             ),
           ),
-          //* ---> Backspace Button <--- *//
-          Padding(
-            padding:
-                EdgeInsets.only(top: height * 0.28, bottom: height * 0.625),
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Container(
-                width: width * 0.15,
-                height: height * 0.095,
-                decoration: BoxDecoration(
-                  color: otherBlue,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10.0),
-                    bottomLeft: Radius.circular(10.0),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.5),
-                      offset: Offset(6.0, 6.0),
-                      spreadRadius: 5.0,
-                      blurRadius: 8.0,
-                    )
-                  ],
-                ),
-                child: InkWell(
-                  //splashColor: baffllingBlue,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10.0),
-                    bottomLeft: Radius.circular(10.0),
-                  ),
-                  child: Icon(
-                    MdiIcons.backspace,
-                    color: notSoWhite,
-                    size: 20.0,
-                  ),
-                  onTap: () {
-                    Provider.of<OperationController>(context, listen: false)
-                        .backspace();
-                  },
-                ),
-              ),
-            ),
-          ),
           //* ---> Keypad <--- *//
-          Align(
-            alignment: Alignment.bottomCenter,
+          Padding(
+            padding: EdgeInsets.only(top: height * (1 - 0.625)),
             child: Container(
-              width: double.infinity,
+              width: width,
               height: height * 0.625,
               decoration: BoxDecoration(
                 //color: Colors.transparent,

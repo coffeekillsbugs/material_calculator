@@ -25,6 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   material_design_icons_flutter: ^3.2.4096
   provider: ^4.0.1
+  device_preview: ^0.4.4
 
 dev_dependencies:
   flutter_test:

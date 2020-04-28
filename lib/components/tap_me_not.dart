@@ -66,12 +66,15 @@ class EyeCorn extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(width * 0.22 * 0.6875 * 0.5),
-          splashColor: thisIcon == MdiIcons.swapHorizontal ? otherBlue : placidOrange,
+          splashColor: thisIcon == MdiIcons.backspace ? otherBlue : placidOrange,
           onTap: () {
             var operation = Provider.of<OperationController>(context, listen: false);
             switch(function){
               case 'facto' : print('this');
                 break;
+
+              case 'back' : operation.backspace();
+              break;
             
               default : operation.calCurController(function);
             }
@@ -79,8 +82,7 @@ class EyeCorn extends StatelessWidget {
           child: Center(
             child: Icon(
               thisIcon,
-              color: thisIcon == MdiIcons.swapHorizontal ? otherBlue : placidOrange,
-              //TODO semantic label,
+              color: thisIcon == MdiIcons.backspace ? otherBlue : placidOrange,
               size: thisIcon == MdiIcons.percent ? 25.0 : 30.0,
             )
           ),
@@ -106,9 +108,9 @@ class ACDC extends StatelessWidget {
         color: placidOrange,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(cir),
-          topRight: Radius.circular(cir),
+          topRight: Radius.circular(width * 0.028),
           bottomRight: Radius.circular(cir),
-          bottomLeft: Radius.circular(width * 0.028),
+          bottomLeft: Radius.circular(cir),
         ),
         boxShadow: [
           BoxShadow(
@@ -182,8 +184,8 @@ class Evaluate extends StatelessWidget {
         color: placidOrange,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(cir),
-          topRight: Radius.circular(cir),
-          bottomRight: Radius.circular(width * 0.028),
+          topRight: Radius.circular(width * 0.028),
+          bottomRight: Radius.circular(cir),
           bottomLeft: Radius.circular(cir),
         ),
         boxShadow: [
@@ -214,7 +216,6 @@ class Evaluate extends StatelessWidget {
             child: Icon(
               MdiIcons.equal,
               color: notSoWhite,
-              //TODO semantic label,
               size: 30.0,
             )
           ),

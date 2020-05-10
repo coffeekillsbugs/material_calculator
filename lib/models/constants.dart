@@ -128,7 +128,7 @@ class ColFour extends StatelessWidget {
 
 const List<IconData> myIcons = [
   MdiIcons.squareRoot,
-  MdiIcons.backspace,
+  MdiIcons.keyboardBackspace,
   MdiIcons.exponent,
   MdiIcons.percent,
   //MdiIcons.formatSuperscript,

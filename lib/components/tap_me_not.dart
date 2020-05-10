@@ -66,7 +66,7 @@ class EyeCorn extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(width * 0.22 * 0.6875 * 0.5),
-          splashColor: thisIcon == MdiIcons.backspace ? otherBlue : placidOrange,
+          splashColor: thisIcon == MdiIcons.keyboardBackspace ? otherBlue : placidOrange,
           onTap: () {
             var operation = Provider.of<OperationController>(context, listen: false);
             switch(function){
@@ -82,7 +82,7 @@ class EyeCorn extends StatelessWidget {
           child: Center(
             child: Icon(
               thisIcon,
-              color: thisIcon == MdiIcons.backspace ? otherBlue : placidOrange,
+              color: thisIcon == MdiIcons.keyboardBackspace ? otherBlue : placidOrange,
               size: thisIcon == MdiIcons.percent ? 25.0 : 30.0,
             )
           ),
